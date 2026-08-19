@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="assets/particles.min.js"></script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #06090b; font-family: Figtree, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  a { color: #08c0d8; text-decoration: none; }
+  a:hover { color: #5fe2f2; }
+  ::selection { background: rgba(8,192,216,.28); }
+  :focus-visible { outline: 2px solid #08c0d8; outline-offset: 3px; }
+  @keyframes itsMarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes itsPulse { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+  @keyframes itsDash { to { stroke-dashoffset: -1200; } }
+  @keyframes itsFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes itsGlow { 0%,100% { opacity: .5; transform: scale(1); } 50% { opacity: .85; transform: scale(1.08); } }
+  @keyframes itsSpin { to { transform: rotate(360deg); } }
+  @keyframes itsDrift { 0%,100% { transform: translate3d(0,0,0); } 33% { transform: translate3d(14px,-18px,0); } 66% { transform: translate3d(-12px,10px,0); } }
+  @keyframes itsSweep { 0% { transform: translateY(-100%); } 100% { transform: translateY(220%); } }
+  #its-particles canvas { display: block; }
+  .its-cursor { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; will-change: transform; }
+  @media (hover: none) { .its-cursor { display: none !important; } }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="#06090b"></rect><circle cx="120" cy="86" r="13" fill="#08c0d8"></circle><path d="M107 112h26v42a13 13 0 0 1-13 13 13 13 0 0 1-13-13z" fill="none" stroke="#08c0d8" stroke-width="9"></path><text x="120" y="196" font-family="sans-serif" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle">ITS</text></svg></template>
+<div style="background:#06090b;color:#e7eef0;font-family:Figtree,system-ui,sans-serif;overflow-x:hidden">
+
+  <header style="position:sticky;top:0;z-index:60;backdrop-filter:blur(14px);background:rgba(6,9,11,.82);border-bottom:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:flex;align-items:center;gap:clamp(16px,3vw,44px);height:clamp(68px,7vw,86px)">
+      <a href="#top" aria-label="Ideal Technology Solutions" style="display:flex;align-items:center;gap:11px;flex:0 0 auto">
+        <span style="position:relative;width:15px;height:34px;flex:0 0 auto;display:block">
+          <span style="position:absolute;top:0;left:1px;width:9px;height:9px;border-radius:50%;background:#08c0d8;display:block"></span>
+          <span style="position:absolute;top:13px;left:1px;width:9px;height:21px;border-radius:0 0 9px 9px;border:2.5px solid #08c0d8;border-top:0;display:block"></span>
+        </span>
+        <span style="display:flex;flex-direction:column;gap:3px;line-height:1">
+          <span style="font-family:Sora,sans-serif;font-size:clamp(19px,2vw,24px);font-weight:700;letter-spacing:-.02em;color:#fff">IDEAL</span>
+          <span style="font-family:Sora,sans-serif;font-size:9.5px;font-weight:400;letter-spacing:.22em;color:#7d8d93;white-space:nowrap">TECHNOLOGY SOLUTIONS</span>
+        </span>
+      </a>
+      <nav style="display:{{ navDisplay }};align-items:center;gap:clamp(14px,2vw,30px);margin-left:auto;font-size:15px;letter-spacing:.01em">
+        <a href="#top" style="color:#e7eef0;padding:8px 0" style-hover="color:#08c0d8">Home</a>
+        <a href="#about" style="color:#e7eef0;padding:8px 0" style-hover="color:#08c0d8">About</a>
+        <div onMouseEnter="{{ openMega }}" onMouseLeave="{{ closeMega }}" style="position:relative;padding:8px 0">
+          <a href="#services" onClick="{{ toggleMega }}" style="color:#e7eef0;display:flex;align-items:center;gap:7px" style-hover="color:#08c0d8">Services
+            <span style="display:inline-block;width:6px;height:6px;border-right:1.5px solid #08c0d8;border-bottom:1.5px solid #08c0d8;transform:rotate(45deg);margin-bottom:3px"></span>
+          </a>
+          <div style="position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%);width:min(1080px,88vw);background:#0b1216;border:1px solid rgba(255,255,255,.09);border-radius:4px;box-shadow:0 40px 90px rgba(0,0,0,.6);padding:34px 34px 28px;display:{{ megaDisplay }};grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:30px">
+            <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="5">
+              <div>
+                <div style="font-family:Sora,sans-serif;font-size:11px;letter-spacing:.22em;color:#08c0d8;margin-bottom:12px">{{ p.num }}</div>
+                <div style="font-family:Sora,sans-serif;font-size:15px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:14px">{{ p.title }}</div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ p.menu }}" as="s" hint-placeholder-count="4">
+                    <a href="#services" style="font-size:13.5px;color:#93a3a9;line-height:1.35" style-hover="color:#08c0d8">{{ s }}</a>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <a href="#industries" style="color:#e7eef0;padding:8px 0" style-hover="color:#08c0d8">Industries</a>
+        <a href="#catalog" style="color:#e7eef0;padding:8px 0" style-hover="color:#08c0d8">Resources</a>
+        <a href="#contact" style="color:#e7eef0;padding:8px 0" style-hover="color:#08c0d8">Contact</a>
+      </nav>
+      <div style="margin-left:auto;display:flex;align-items:center;gap:18px">
+        <a href="tel:+19472280709" style="display:{{ phoneDisplay }};font-family:Sora,sans-serif;font-size:14px;color:#93a3a9;letter-spacing:.02em" style-hover="color:#08c0d8">947-228-0709</a>
+        <a href="#contact" style="font-family:Sora,sans-serif;font-size:14px;font-weight:600;color:#06090b;background:#08c0d8;padding:13px 22px;border-radius:3px;white-space:nowrap;transition:all .25s ease;box-shadow:0 0 0 rgba(8,192,216,0)" style-hover="background:#5fe2f2;color:#06090b;box-shadow:0 10px 34px rgba(8,192,216,.32);transform:translateY(-1px)">Get a Free Consultation</a>
+        <button onClick="{{ toggleMobile }}" aria-label="Menu" style="display:{{ burgerDisplay }};background:transparent;border:1px solid rgba(255,255,255,.16);border-radius:3px;width:42px;height:42px;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer">
+          <span style="width:18px;height:1.5px;background:#e7eef0;display:block"></span>
+          <span style="width:18px;height:1.5px;background:#e7eef0;display:block"></span>
+        </button>
+      </div>
+    </div>
+    <div style="display:{{ mobileDisplay }};border-top:1px solid rgba(255,255,255,.07);padding:18px clamp(20px,5vw,40px) 26px;flex-direction:column;gap:4px;background:#0b1216">
+      <a href="#about" onClick="{{ closeMobile }}" style="color:#e7eef0;font-family:Sora,sans-serif;font-size:19px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)">About</a>
+      <a href="#services" onClick="{{ closeMobile }}" style="color:#e7eef0;font-family:Sora,sans-serif;font-size:19px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)">Services</a>
+      <a href="#industries" onClick="{{ closeMobile }}" style="color:#e7eef0;font-family:Sora,sans-serif;font-size:19px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)">Industries</a>
+      <a href="#catalog" onClick="{{ closeMobile }}" style="color:#e7eef0;font-family:Sora,sans-serif;font-size:19px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.05)">Resources</a>
+      <a href="#contact" onClick="{{ closeMobile }}" style="color:#e7eef0;font-family:Sora,sans-serif;font-size:19px;padding:12px 0">Contact</a>
+    </div>
+  </header>
+
+  <section id="top" style="position:relative;overflow:hidden;background:#06090b;padding:clamp(64px,9vw,120px) 0 clamp(60px,7vw,96px)">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:78px 78px;mask-image:radial-gradient(120% 80% at 70% 20%,#000 20%,transparent 78%)"></div>
+    <div style="position:absolute;top:-14%;right:-6%;width:min(760px,72vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(8,192,216,.22),transparent 62%);filter:blur(20px);animation:itsGlow 9s ease-in-out infinite"></div>
+    <div id="its-particles" style="position:absolute;inset:0;z-index:1"></div>
+    <div style="position:absolute;left:4%;bottom:12%;width:clamp(90px,10vw,150px);aspect-ratio:1;border:1px solid rgba(8,192,216,.18);border-radius:50%;animation:itsDrift 16s ease-in-out infinite"></div>
+    <div style="position:absolute;left:14%;top:12%;width:10px;height:10px;border-radius:50%;background:#08c0d8;opacity:.5;animation:itsFloat 6s ease-in-out infinite"></div>
+    <div style="position:absolute;right:22%;bottom:8%;width:clamp(60px,7vw,96px);height:clamp(60px,7vw,96px);border:1px solid rgba(255,255,255,.09);transform:rotate(24deg);animation:itsDrift 21s ease-in-out infinite"></div>
+    <div style="position:relative;z-index:2;max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:clamp(40px,5vw,72px);align-items:center">
+      <div data-reveal="1">
+        <div style="display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(8,192,216,.3);background:rgba(8,192,216,.07);border-radius:100px;padding:8px 16px;font-family:Sora,sans-serif;font-size:clamp(10px,1vw,12px);letter-spacing:.14em;white-space:nowrap;color:#7fdcea;margin-bottom:clamp(24px,3vw,34px)">
+          <span style="width:6px;height:6px;border-radius:50%;background:#08c0d8;animation:itsPulse 2.4s ease-in-out infinite"></span>
+          SOUTHFIELD · DETROIT METRO · SINCE 2001
+        </div>
+        <h1 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(29px,3.5vw,52px);line-height:1.08;letter-spacing:-.028em;color:#fff;margin:0 0 clamp(20px,2.4vw,30px);max-width:22ch;text-wrap:balance">Technology that moves your business<span style="color:#08c0d8"> forward.</span></h1>
+        <p style="font-size:clamp(17px,1.35vw,20px);line-height:1.62;color:#a7b6bc;max-width:56ch;margin:0 0 clamp(30px,3.6vw,44px);text-wrap:pretty">We don't just fix technology problems. Ideal Technology Solutions builds, secures, manages and modernizes the infrastructure, cloud, software and data systems that businesses across Michigan depend on every day.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-bottom:clamp(38px,4.6vw,58px)">
+          <a href="#contact" style="font-family:Sora,sans-serif;font-size:15px;font-weight:600;color:#06090b;background:#08c0d8;padding:17px 30px;border-radius:3px;transition:all .25s ease" style-hover="background:#5fe2f2;box-shadow:0 14px 40px rgba(8,192,216,.34);transform:translateY(-2px);color:#06090b">Get a Free Consultation</a>
+          <a href="#services" style="font-family:Sora,sans-serif;font-size:15px;font-weight:500;color:#e7eef0;border:1px solid rgba(255,255,255,.18);padding:17px 30px;border-radius:3px;transition:all .25s ease" style-hover="border-color:#08c0d8;color:#08c0d8;background:rgba(8,192,216,.06)">Explore Our Services</a>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:clamp(18px,2.4vw,34px);border-top:1px solid rgba(255,255,255,.08);padding-top:clamp(22px,2.6vw,30px);max-width:620px">
+          <div>
+            <div style="font-family:Sora,sans-serif;font-size:clamp(26px,2.8vw,36px);font-weight:600;color:#fff;letter-spacing:-.02em">{{ countYears }}</div>
+            <div style="font-size:13px;color:#7d8d93;letter-spacing:.06em;margin-top:6px">YEARS IN BUSINESS</div>
+          </div>
+          <div>
+            <div style="font-family:Sora,sans-serif;font-size:clamp(26px,2.8vw,36px);font-weight:600;color:#fff;letter-spacing:-.02em">{{ countServices }}</div>
+            <div style="font-size:13px;color:#7d8d93;letter-spacing:.06em;margin-top:6px">SERVICES DELIVERED</div>
+          </div>
+          <div>
+            <div style="font-family:Sora,sans-serif;font-size:clamp(26px,2.8vw,36px);font-weight:600;color:#fff;letter-spacing:-.02em">{{ countPartners }}</div>
+            <div style="font-size:13px;color:#7d8d93;letter-spacing:.06em;margin-top:6px">TECHNOLOGY PARTNERS</div>
+          </div>
+        </div>
+      </div>
+      <div data-reveal="1" style="position:relative;min-height:clamp(360px,42vw,540px);padding:86px 0;display:flex;align-items:center;justify-content:center">
+        <div style="position:absolute;width:78%;aspect-ratio:1;border:1px solid rgba(8,192,216,.16);border-radius:50%"></div>
+        <div style="position:absolute;width:54%;aspect-ratio:1;border:1px solid rgba(8,192,216,.22);border-radius:50%"></div>
+        <div style="position:absolute;width:30%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(8,192,216,.3),transparent 70%);animation:itsGlow 6s ease-in-out infinite"></div>
+        <div style="position:absolute;width:78%;aspect-ratio:1;animation:itsSpin 26s linear infinite">
+          <span style="position:absolute;top:-5px;left:calc(50% - 5px);width:10px;height:10px;border-radius:50%;background:#08c0d8;box-shadow:0 0 18px rgba(8,192,216,.9);display:block"></span>
+          <span style="position:absolute;bottom:-4px;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);display:block"></span>
+        </div>
+        <div style="position:absolute;width:54%;aspect-ratio:1;animation:itsSpin 18s linear infinite reverse">
+          <span style="position:absolute;top:calc(50% - 4px);right:-4px;width:8px;height:8px;border-radius:50%;background:#08c0d8;box-shadow:0 0 14px rgba(8,192,216,.8);display:block"></span>
+        </div>
+        <div data-float="1" data-float-depth="26" style="position:absolute;top:0;left:0;max-width:100%;z-index:3;display:flex;align-items:center;gap:10px;background:rgba(11,18,22,.82);border:1px solid rgba(8,192,216,.28);border-radius:3px;padding:11px 15px;backdrop-filter:blur(10px);box-shadow:0 18px 44px rgba(0,0,0,.5);animation:itsFloat 8s ease-in-out infinite">
+          <span style="width:7px;height:7px;border-radius:50%;background:#08c0d8;animation:itsPulse 2s ease-in-out infinite;display:block"></span>
+          <span style="font-family:Sora,sans-serif;font-size:12.5px;color:#d7e3e7;letter-spacing:.04em;white-space:nowrap">Threats blocked · today</span>
+        </div>
+        <div data-float="1" data-float-depth="-34" style="position:absolute;bottom:0;right:0;max-width:100%;z-index:3;background:rgba(11,18,22,.82);border:1px solid rgba(255,255,255,.12);border-radius:3px;padding:13px 16px;backdrop-filter:blur(10px);box-shadow:0 18px 44px rgba(0,0,0,.5);animation:itsFloat 9.5s ease-in-out infinite 1.2s">
+          <div style="font-family:Sora,sans-serif;font-size:19px;color:#fff;letter-spacing:-.01em">Nightly</div>
+          <div style="font-size:11px;color:#7d8d93;letter-spacing:.1em;margin-top:3px">BACKUPS VERIFIED</div>
+        </div>
+        <div data-float="1" data-float-depth="18" style="position:absolute;bottom:0;left:0;z-index:3;width:46px;height:46px;border:1px solid rgba(8,192,216,.3);border-radius:3px;background:rgba(8,192,216,.09);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;animation:itsFloat 7s ease-in-out infinite .6s">
+          <span style="font-family:Sora,sans-serif;font-size:15px;color:#08c0d8">⌘</span>
+        </div>
+        <div style="position:relative;width:min(420px,86%);background:linear-gradient(160deg,rgba(16,26,31,.92),rgba(11,18,22,.86));border:1px solid rgba(255,255,255,.1);border-radius:5px;backdrop-filter:blur(8px);box-shadow:0 40px 90px rgba(0,0,0,.55);padding:24px;animation:itsFloat 7s ease-in-out infinite">
+          <div style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:16px;margin-bottom:18px">
+            <span style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.18em;color:#7fdcea">ENVIRONMENT HEALTH</span>
+            <span style="display:flex;align-items:center;gap:7px;font-size:12px;color:#93a3a9"><span style="width:6px;height:6px;border-radius:50%;background:#08c0d8;animation:itsPulse 2s ease-in-out infinite"></span>Monitored</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ healthRows }}" as="r" hint-placeholder-count="4">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13.5px;color:#c6d3d8;margin-bottom:7px"><span>{{ r.label }}</span><span style="color:#08c0d8;font-family:Sora,sans-serif">{{ r.value }}</span></div>
+                <div style="height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden"><div style="height:100%;background:linear-gradient(90deg,#067c92,#08c0d8);width:{{ r.bar }};border-radius:2px;transition:width 1.4s cubic-bezier(.22,1,.36,1)"></div></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div style="background:rgba(8,192,216,.07);border:1px solid rgba(8,192,216,.16);border-radius:3px;padding:12px">
+              <div style="font-family:Sora,sans-serif;font-size:20px;color:#fff">24/7</div>
+              <div style="font-size:11.5px;color:#7d8d93;letter-spacing:.08em;margin-top:4px">MONITORING</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:12px">
+              <div style="font-family:Sora,sans-serif;font-size:20px;color:#fff">Azure</div>
+              <div style="font-size:11.5px;color:#7d8d93;letter-spacing:.08em;margin-top:4px">CLOUD PLATFORM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#06090b;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:clamp(30px,3.6vw,46px) 0;overflow:hidden">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:baseline;justify-content:space-between;margin-bottom:clamp(22px,2.6vw,32px)">
+        <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#6d7d83">BUILT ON PLATFORMS BUSINESSES TRUST</div>
+        <div style="font-size:14px;color:#5d6c72">Certified and supported by our engineers</div>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ partnerGrid }};gap:clamp(12px,1.4vw,18px)">
+        <sc-for list="{{ partnerCards }}" as="p" hint-placeholder-count="8">
+          <div title="{{ p.name }}" style="border:1px solid rgba(255,255,255,.14);border-radius:4px;background:#ffffff;height:clamp(112px,10vw,140px);display:flex;align-items:center;justify-content:center;padding:18px;transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease" style-hover="border-color:rgba(8,192,216,.55);transform:translateY(-3px);box-shadow:0 18px 40px rgba(0,0,0,.45)">
+            <div role="img" aria-label="{{ p.name }}" style="width:{{ p.w }};height:{{ p.h }};max-width:100%;background-image:{{ p.bg }};background-size:contain;background-position:center;background-repeat:no-repeat"></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" style="background:#06090b;padding:clamp(76px,9vw,132px) 0;position:relative">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:100% 64px;mask-image:radial-gradient(90% 60% at 20% 40%,#000,transparent 80%)"></div>
+    <div data-float="1" data-float-depth="-30" style="position:absolute;top:8%;right:6%;width:clamp(120px,13vw,200px);aspect-ratio:1;border:1px solid rgba(8,192,216,.16);border-radius:50%;animation:itsDrift 19s ease-in-out infinite"></div>
+    <div data-float="1" data-float-depth="22" style="position:absolute;bottom:12%;left:3%;width:clamp(50px,6vw,84px);height:clamp(50px,6vw,84px);border:1px solid rgba(255,255,255,.08);transform:rotate(18deg);animation:itsDrift 24s ease-in-out infinite"></div>
+    <div style="position:absolute;top:34%;left:48%;width:8px;height:8px;border-radius:50%;background:#08c0d8;opacity:.45;animation:itsFloat 7.5s ease-in-out infinite"></div>
+    <div style="position:relative;max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(44px,5vw,72px)">
+        <div>
+          <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#08c0d8;margin-bottom:20px">01 — WHAT WE DO</div>
+          <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(32px,3.9vw,56px);line-height:1.06;letter-spacing:-.028em;color:#fff;margin:0;text-wrap:balance">Five pillars. One technology partner.</h2>
+        </div>
+        <p style="font-size:clamp(16px,1.2vw,18px);line-height:1.6;color:#93a3a9;margin:0;max-width:46ch;text-wrap:pretty">More than forty services, organized so you can find what your business actually needs — from day-to-day support to cloud, custom software, data and long-range strategy.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ pillarGrid }};gap:clamp(20px,3vw,44px);align-items:stretch">
+        <div data-reveal="1" style="display:flex;flex-direction:column;justify-content:stretch">
+          <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="5">
+            <button onClick="{{ p.select }}" style="text-align:left;background:{{ p.bg }};border:0;border-top:1px solid rgba(255,255,255,.09);border-left:2px solid {{ p.edge }};cursor:pointer;padding:clamp(18px,2vw,26px) clamp(16px,2vw,24px);display:flex;flex:1 1 0;gap:18px;align-items:center;transition:background .3s ease,border-color .3s ease;font-family:Sora,sans-serif" style-hover="background:rgba(8,192,216,.07)">
+              <span style="font-size:12px;letter-spacing:.16em;color:{{ p.numColor }};flex:0 0 auto">{{ p.num }}</span>
+              <span style="font-size:clamp(17px,1.6vw,22px);font-weight:500;color:{{ p.titleColor }};line-height:1.24;letter-spacing:-.01em">{{ p.title }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <div data-reveal="1" style="background:linear-gradient(150deg,rgba(16,26,31,.9),rgba(9,14,17,.9));border:1px solid rgba(255,255,255,.09);border-radius:4px;padding:clamp(26px,3.4vw,48px);min-height:clamp(340px,34vw,420px);position:relative;overflow:hidden">
+          <div style="position:absolute;top:-40%;right:-20%;width:60%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(8,192,216,.14),transparent 65%)"></div>
+          <div style="position:relative">
+            <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#08c0d8;margin-bottom:16px">PILLAR {{ active.num }}</div>
+            <h3 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(24px,2.6vw,36px);line-height:1.12;letter-spacing:-.022em;color:#fff;margin:0 0 16px">{{ active.title }}</h3>
+            <p style="font-size:clamp(16px,1.2vw,18px);line-height:1.62;color:#a7b6bc;margin:0 0 clamp(24px,3vw,34px);max-width:56ch;text-wrap:pretty">{{ active.blurb }}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:clamp(26px,3vw,36px)">
+              <sc-for list="{{ active.services }}" as="s" hint-placeholder-count="8">
+                <span style="font-size:13.5px;color:#c6d3d8;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);border-radius:100px;padding:8px 15px;transition:all .25s ease" style-hover="border-color:rgba(8,192,216,.5);color:#5fe2f2;background:rgba(8,192,216,.08)">{{ s }}</span>
+              </sc-for>
+            </div>
+            <a href="#contact" style="font-family:Sora,sans-serif;font-size:14.5px;font-weight:500;color:#08c0d8;display:inline-flex;align-items:center;gap:10px;border-bottom:1px solid rgba(8,192,216,.35);padding-bottom:5px" style-hover="color:#5fe2f2;gap:16px">Talk to us about {{ active.short }} <span>→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#f4f7f8;color:#06090b;padding:clamp(76px,9vw,132px) 0;position:relative;overflow:hidden">
+    <div data-float="1" data-float-depth="-24" style="position:absolute;top:14%;right:-4%;width:clamp(140px,16vw,240px);aspect-ratio:1;border:1px solid rgba(6,9,11,.09);border-radius:50%;animation:itsDrift 22s ease-in-out infinite"></div>
+    <div data-float="1" data-float-depth="16" style="position:absolute;bottom:8%;right:12%;width:10px;height:10px;border-radius:50%;background:#08c0d8;opacity:.55;animation:itsFloat 6.5s ease-in-out infinite"></div>
+    <div style="position:relative;max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="max-width:800px;margin-bottom:clamp(46px,5vw,76px)">
+        <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#067c92;margin-bottom:20px">02 — WHY IDEAL</div>
+        <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(19px,2.5vw,38px);line-height:1.1;letter-spacing:-.028em;margin:0;white-space:{{ nowrapWide }}">The difference is how we work, not just what we deploy.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ whyGrid }};gap:clamp(16px,1.8vw,26px);align-items:stretch">
+        <div data-reveal="1" style="position:relative;overflow:hidden;background:#06090b;color:#fff;border-radius:4px;padding:clamp(28px,3.4vw,46px);display:flex;flex-direction:column;min-height:clamp(300px,32vw,420px)">
+          <div style="position:absolute;top:-30%;right:-25%;width:75%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(8,192,216,.22),transparent 64%);animation:itsGlow 9s ease-in-out infinite"></div>
+          <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(80% 70% at 30% 70%,#000,transparent 78%)"></div>
+          <div style="position:relative;display:flex;flex-direction:column;height:100%">
+            <div style="font-family:Sora,sans-serif;font-size:clamp(44px,5vw,78px);font-weight:300;color:rgba(255,255,255,.16);letter-spacing:-.04em;line-height:1">{{ reasonLead.num }}</div>
+            <h3 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(24px,2.5vw,34px);letter-spacing:-.022em;line-height:1.14;margin:clamp(16px,2vw,26px) 0 14px;max-width:22ch">{{ reasonLead.title }}</h3>
+            <p style="font-size:clamp(15.5px,1.15vw,17.5px);line-height:1.62;color:#a7b6bc;margin:0;max-width:44ch;text-wrap:pretty">{{ reasonLead.body }}</p>
+            <div style="margin-top:auto;padding-top:clamp(26px,3vw,38px);display:flex;align-items:baseline;gap:14px">
+              <span style="font-family:Sora,sans-serif;font-size:clamp(22px,2.2vw,30px);color:#08c0d8;letter-spacing:-.02em;white-space:nowrap">{{ reasonLead.stat }}</span>
+              <span style="font-size:11.5px;letter-spacing:.14em;color:#7d8d93">{{ reasonLead.statLabel }}</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ whySubGrid }};gap:clamp(16px,1.8vw,26px)">
+          <sc-for list="{{ reasonRest }}" as="r" hint-placeholder-count="4">
+            <div data-reveal="1" style="background:#fff;border:1px solid rgba(6,9,11,.1);border-radius:4px;padding:clamp(22px,2.4vw,32px);display:flex;flex-direction:column;transition:border-color .3s ease,transform .3s ease,box-shadow .3s ease" style-hover="border-color:rgba(8,192,216,.55);transform:translateY(-4px);box-shadow:0 22px 44px rgba(6,9,11,.09)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(18px,2vw,28px)">
+                <span style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.18em;color:#067c92">{{ r.num }}</span>
+                <span style="width:26px;height:1px;background:rgba(6,9,11,.18);display:block"></span>
+              </div>
+              <h3 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(18px,1.7vw,23px);letter-spacing:-.018em;line-height:1.18;margin:0 0 10px">{{ r.title }}</h3>
+              <p style="font-size:14.5px;line-height:1.58;color:#43535a;margin:0;max-width:38ch;text-wrap:pretty">{{ r.body }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#06090b;padding:clamp(76px,9vw,132px) 0;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(115deg,rgba(8,192,216,.07),transparent 45%),linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:auto,64px 64px,64px 64px"></div>
+    <div style="position:relative;max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="max-width:760px;margin-bottom:clamp(44px,5vw,72px)">
+        <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#08c0d8;margin-bottom:20px">03 — HOW IT CONNECTS</div>
+        <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(32px,3.9vw,56px);line-height:1.06;letter-spacing:-.028em;color:#fff;margin:0 0 18px;text-wrap:balance">One connected environment, end to end.</h2>
+        <p style="font-size:clamp(16px,1.2vw,18px);line-height:1.62;color:#93a3a9;margin:0;max-width:52ch;text-wrap:pretty">Your people, network, cloud, security, data and business outcomes belong to one system. We design and operate it as one.</p>
+      </div>
+      <div data-reveal="1" style="display:grid;grid-template-columns:{{ chainGrid }};gap:2px;border:1px solid rgba(255,255,255,.09);border-radius:4px;overflow:hidden;background:rgba(255,255,255,.06)">
+        <sc-for list="{{ chain }}" as="c" hint-placeholder-count="6">
+          <div style="background:#0a1114;padding:clamp(24px,2.6vw,36px) clamp(18px,2vw,26px);display:flex;flex-direction:column;gap:14px;min-height:clamp(170px,17vw,210px);transition:background .35s ease" style-hover="background:#0f1a1f">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-family:Sora,sans-serif;font-size:11.5px;letter-spacing:.18em;color:#08c0d8">{{ c.num }}</span>
+              <span style="width:7px;height:7px;border-radius:50%;background:#08c0d8;animation:itsPulse 3s ease-in-out infinite;animation-delay:{{ c.delay }}"></span>
+            </div>
+            <div style="font-family:Sora,sans-serif;font-size:clamp(18px,1.7vw,23px);font-weight:500;color:#fff;letter-spacing:-.015em">{{ c.title }}</div>
+            <div style="font-size:13.5px;line-height:1.5;color:#7d8d93;margin-top:auto">{{ c.body }}</div>
+          </div>
+        </sc-for>
+      </div>
+      <div data-reveal="1" style="margin-top:2px;border:1px solid rgba(255,255,255,.09);border-radius:4px;background:#0a1114;padding:clamp(20px,2.4vw,30px);overflow:hidden">
+        <svg viewBox="0 0 1200 90" preserveAspectRatio="none" style="width:100%;height:clamp(64px,7vw,90px);display:block">
+          <path d="M0 45 H1200" stroke="rgba(255,255,255,.09)" stroke-width="1"></path>
+          <path d="M0 45 H1200" stroke="#08c0d8" stroke-width="1.6" stroke-linecap="round" stroke-dasharray="140 1060" style="animation:itsDash 7s linear infinite"></path>
+          <path d="M0 45 H1200" stroke="rgba(8,192,216,.35)" stroke-width="4" stroke-linecap="round" stroke-dasharray="26 1174" style="animation:itsDash 7s linear infinite"></path>
+          <g fill="none" stroke="rgba(8,192,216,.55)">
+            <circle cx="100" cy="45" r="9"></circle><circle cx="320" cy="45" r="9"></circle><circle cx="540" cy="45" r="9"></circle>
+            <circle cx="760" cy="45" r="9"></circle><circle cx="980" cy="45" r="9"></circle><circle cx="1160" cy="45" r="9"></circle>
+          </g>
+          <g fill="#08c0d8">
+            <circle cx="100" cy="45" r="3"></circle><circle cx="320" cy="45" r="3"></circle><circle cx="540" cy="45" r="3"></circle>
+            <circle cx="760" cy="45" r="3"></circle><circle cx="980" cy="45" r="3"></circle><circle cx="1160" cy="45" r="3"></circle>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="industries" style="background:#f4f7f8;color:#06090b;padding:clamp(76px,9vw,132px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(40px,4.6vw,64px)">
+        <div>
+          <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#067c92;margin-bottom:20px">04 — INDUSTRIES</div>
+          <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(32px,3.9vw,56px);line-height:1.06;letter-spacing:-.028em;margin:0;text-wrap:balance">Technology shaped to your industry.</h2>
+        </div>
+        <p style="font-size:clamp(16px,1.2vw,18px);line-height:1.6;color:#43535a;margin:0;max-width:44ch;text-wrap:pretty">Compliance, uptime and workflow expectations differ by sector. We build to the ones you answer to.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:{{ industriesGrid }};gap:clamp(14px,1.6vw,22px)">
+        <sc-for list="{{ industries }}" as="i" hint-placeholder-count="6">
+          <div data-reveal="1" style="position:relative;overflow:hidden;background:#fff;border:1px solid rgba(6,9,11,.1);border-radius:4px;padding:clamp(24px,2.8vw,36px);min-height:clamp(230px,22vw,280px);display:flex;flex-direction:column;transition:background .4s ease,color .4s ease,border-color .4s ease,transform .4s ease,box-shadow .4s ease" style-hover="background:#06090b;color:#fff;border-color:#06090b;transform:translateY(-5px);box-shadow:0 26px 54px rgba(6,9,11,.18)">
+            <div style="position:absolute;top:clamp(-14px,-1vw,-8px);right:clamp(10px,1.6vw,22px);font-family:Sora,sans-serif;font-size:clamp(64px,7vw,104px);font-weight:300;color:rgba(6,9,11,.06);letter-spacing:-.05em;line-height:1;pointer-events:none">{{ i.num }}</div>
+            <div style="position:relative;width:42px;height:42px;border:1px solid rgba(8,192,216,.45);border-radius:3px;background:rgba(8,192,216,.08);display:flex;align-items:center;justify-content:center;margin-bottom:clamp(20px,2.2vw,28px)">
+              <span style="font-family:Sora,sans-serif;font-size:14px;color:#067c92;letter-spacing:.02em">{{ i.glyph }}</span>
+            </div>
+            <h3 style="position:relative;font-family:Sora,sans-serif;font-weight:600;font-size:clamp(20px,2vw,27px);letter-spacing:-.02em;margin:0 0 12px;line-height:1.14">{{ i.title }}</h3>
+            <p style="position:relative;font-size:14.5px;line-height:1.58;color:inherit;opacity:.72;margin:0 0 auto;max-width:36ch;text-wrap:pretty">{{ i.body }}</p>
+            <div style="position:relative;margin-top:clamp(20px,2.4vw,28px);padding-top:16px;border-top:1px solid rgba(127,140,146,.28);display:flex;align-items:center;justify-content:space-between;font-family:Sora,sans-serif;font-size:13.5px;color:#08c0d8">
+              <span>{{ i.meta }}</span>
+              <span>→</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" style="background:#f4f7f8;color:#06090b;padding:0 0 clamp(76px,9vw,132px)">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:{{ aboutGrid }};gap:clamp(30px,4vw,64px);align-items:center">
+      <div data-reveal="1">
+        <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#067c92;margin-bottom:20px">05 — WHO WE ARE</div>
+        <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(30px,3.4vw,48px);line-height:1.08;letter-spacing:-.026em;margin:0 0 24px;text-wrap:balance">A Detroit technology partner, not a help desk.</h2>
+        <p style="font-size:clamp(16px,1.2vw,18px);line-height:1.66;color:#43535a;margin:0 0 18px;max-width:56ch;text-wrap:pretty">Ideal Technology Solutions serves businesses in Southfield, Detroit and the surrounding region with managed IT, network design, cloud infrastructure, cybersecurity, custom software and technology consulting. Local teams, certified engineers, and technology chosen for how long it has to last.</p>
+        <p style="font-size:clamp(16px,1.2vw,18px);line-height:1.66;color:#43535a;margin:0 0 clamp(30px,3.4vw,40px);max-width:56ch;text-wrap:pretty">Most client relationships start with one problem and grow into a full technology roadmap. That is the point: technology decisions compound, and the partner who made them should still be there when they do.</p>
+        <a href="#contact" style="font-family:Sora,sans-serif;font-size:14.5px;font-weight:600;color:#06090b;border:1px solid rgba(6,9,11,.22);padding:16px 28px;border-radius:3px;display:inline-block;transition:all .25s ease" style-hover="background:#06090b;color:#fff;border-color:#06090b">Discover Our Story</a>
+      </div>
+      <div data-reveal="1" style="position:relative">
+        <div style="position:relative;border:1px solid rgba(6,9,11,.14);border-radius:4px;overflow:hidden;background:#fff;box-shadow:0 26px 60px rgba(6,9,11,.12)">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 20px;border-bottom:1px solid rgba(6,9,11,.1)">
+            <div style="font-family:Sora,sans-serif;font-size:11.5px;letter-spacing:.18em;color:#067c92">CORPORATE HEADQUARTERS</div>
+            <div style="font-size:13px;color:#43535a">Southfield, MI</div>
+          </div>
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2946.140640751457!2d-83.22570259999999!3d42.4034501!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8824ca43b9995555%3A0x31840ca94dc44570!2sIdeal%20Technology%20Solutions%20LLC!5e0!3m2!1sen!2s!4v1787097858858!5m2!1sen!2s" title="Ideal Technology Solutions LLC on Google Maps" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="display:block;width:100%;height:clamp(280px,30vw,400px);border:0;filter:grayscale(.42) contrast(1.04)"></iframe>
+          <div style="display:flex;flex-wrap:wrap;gap:14px 26px;padding:18px 20px;border-top:1px solid rgba(6,9,11,.1);font-size:14px;color:#43535a">
+            <span>29777 Telegraph Road, Suite 4200, Southfield, MI 48034</span>
+            <a href="tel:+19472280709" style="font-family:Sora,sans-serif;color:#067c92" style-hover="color:#08c0d8">947-228-0709</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1360px;margin:clamp(34px,4vw,58px) auto 0;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="display:grid;grid-template-columns:{{ factGrid }};gap:1px;background:rgba(6,9,11,.12);border:1px solid rgba(6,9,11,.12);border-radius:4px;overflow:hidden">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+          <div style="background:#fff;padding:clamp(20px,2.2vw,28px);display:flex;flex-direction:column;gap:10px">
+            <div style="font-family:Sora,sans-serif;font-size:11.5px;letter-spacing:.18em;color:#067c92">{{ f.label }}</div>
+            <div style="font-family:Sora,sans-serif;font-size:clamp(16px,1.35vw,19px);font-weight:500;letter-spacing:-.015em;line-height:1.28">{{ f.value }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="catalog" style="background:#06090b;padding:clamp(76px,9vw,132px) 0">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(40px,4.6vw,64px)">
+        <div>
+          <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#08c0d8;margin-bottom:20px">06 — SERVICE CATALOG</div>
+          <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(32px,3.9vw,56px);line-height:1.06;letter-spacing:-.028em;color:#fff;margin:0;text-wrap:balance">Everything we can take off your plate.</h2>
+        </div>
+        <a href="#contact" style="font-family:Sora,sans-serif;font-size:14.5px;font-weight:500;color:#08c0d8;justify-self:start;border-bottom:1px solid rgba(8,192,216,.35);padding-bottom:6px;display:inline-flex;gap:10px" style-hover="gap:16px;color:#5fe2f2">Browse the full catalog <span>→</span></a>
+      </div>
+      <div data-reveal="1" style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:clamp(26px,3vw,38px)">
+        <sc-for list="{{ catalogFilters }}" as="f" hint-placeholder-count="6">
+          <button onClick="{{ f.select }}" style="cursor:pointer;font-family:Sora,sans-serif;font-size:13.5px;background:{{ f.bg }};color:{{ f.color }};border:1px solid {{ f.border }};border-radius:100px;padding:10px 18px;display:flex;align-items:center;gap:9px;transition:all .25s ease" style-hover="border-color:rgba(8,192,216,.6);color:#5fe2f2">
+            <span>{{ f.name }}</span>
+            <span style="font-size:11.5px;opacity:.65">{{ f.count }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="font-family:Sora,sans-serif;font-size:13px;letter-spacing:.14em;color:#5d6c72;margin-bottom:16px">{{ catalogActiveTitle }}</div>
+      <div style="display:grid;grid-template-columns:{{ catalogGrid }};gap:clamp(10px,1.2vw,16px)">
+        <sc-for list="{{ catalogItems }}" as="s" hint-placeholder-count="9">
+          <a href="#contact" style="border:1px solid rgba(255,255,255,.09);border-radius:4px;background:rgba(255,255,255,.02);padding:clamp(16px,1.8vw,22px);display:flex;flex-direction:column;gap:8px;transition:border-color .25s ease,background .25s ease,transform .25s ease" style-hover="border-color:rgba(8,192,216,.45);background:rgba(8,192,216,.06);transform:translateY(-2px)">
+            <span style="display:{{ s.tagDisplay }};font-family:Sora,sans-serif;font-size:10.5px;letter-spacing:.16em;color:#5d6c72">PILLAR {{ s.tag }}</span>
+            <span style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-family:Sora,sans-serif;font-size:clamp(15px,1.3vw,17px);font-weight:500;color:#e7eef0;letter-spacing:-.012em;line-height:1.25">{{ s.name }}<span style="color:#08c0d8;font-size:14px">→</span></span>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:#06090b;padding:0 0 clamp(76px,9vw,132px)">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div data-reveal="1" style="max-width:760px;margin-bottom:clamp(40px,4.6vw,64px)">
+        <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#08c0d8;margin-bottom:20px">07 — HOW WE WORK</div>
+        <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(32px,3.9vw,56px);line-height:1.06;letter-spacing:-.028em;color:#fff;margin:0;font-size:clamp(22px,3.2vw,52px);white-space:{{ nowrapWide }}">Five steps, repeated as you grow.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(18px,2.4vw,32px)">
+        <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+          <div data-reveal="1" style="position:relative;padding-top:30px">
+            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:rgba(255,255,255,.12)"></div>
+            <div style="position:absolute;top:-4px;left:0;width:9px;height:9px;border-radius:50%;background:#08c0d8;box-shadow:0 0 0 4px rgba(8,192,216,.15)"></div>
+            <div style="font-family:Sora,sans-serif;font-size:clamp(34px,3.6vw,50px);font-weight:300;color:rgba(255,255,255,.16);letter-spacing:-.04em;line-height:1;margin-bottom:14px">{{ s.num }}</div>
+            <h3 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(18px,1.7vw,23px);letter-spacing:-.018em;color:#fff;margin:0 0 10px">{{ s.title }}</h3>
+            <p style="font-size:14.5px;line-height:1.58;color:#7d8d93;margin:0;max-width:32ch;text-wrap:pretty">{{ s.body }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="position:relative;overflow:hidden;background:linear-gradient(150deg,#08262c,#06090b 62%);padding:clamp(76px,9vw,140px) 0">
+    <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:70px 70px;mask-image:radial-gradient(80% 90% at 25% 30%,#000,transparent 75%)"></div>
+    <div style="position:absolute;bottom:-30%;left:40%;width:min(680px,70vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(8,192,216,.2),transparent 62%);animation:itsGlow 10s ease-in-out infinite"></div>
+    <div data-float="1" data-float-depth="28" style="position:absolute;top:12%;right:8%;width:clamp(70px,8vw,120px);aspect-ratio:1;border:1px solid rgba(8,192,216,.22);border-radius:50%;animation:itsDrift 18s ease-in-out infinite"></div>
+    <div data-float="1" data-float-depth="-20" style="position:absolute;top:24%;left:6%;width:8px;height:8px;border-radius:50%;background:#08c0d8;box-shadow:0 0 16px rgba(8,192,216,.8);animation:itsFloat 8s ease-in-out infinite"></div>
+    <div data-reveal="1" style="position:relative;z-index:2;max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(34px,5vw,72px);align-items:center">
+      <div>
+        <h2 style="font-family:Sora,sans-serif;font-weight:600;font-size:clamp(27px,3.1vw,46px);line-height:1.1;letter-spacing:-.028em;color:#fff;margin:0 0 20px;max-width:24ch;text-wrap:balance">Ready to build a smarter technology environment?</h2>
+        <p style="font-size:clamp(17px,1.3vw,19px);line-height:1.6;color:#a7b6bc;margin:0 0 clamp(28px,3.2vw,38px);max-width:48ch;text-wrap:pretty">Book a 30-minute consultation with a client advisor. We'll review your current environment and tell you plainly what's worth changing first.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <a href="tel:+19472280709" style="font-family:Sora,sans-serif;font-size:15px;font-weight:600;color:#06090b;background:#08c0d8;padding:17px 30px;border-radius:3px;transition:all .25s ease" style-hover="background:#5fe2f2;box-shadow:0 14px 40px rgba(8,192,216,.34);transform:translateY(-2px);color:#06090b">Schedule a Consultation</a>
+          <a href="tel:+19472280709" style="font-family:Sora,sans-serif;font-size:15px;font-weight:500;color:#e7eef0;border:1px solid rgba(255,255,255,.2);padding:17px 30px;border-radius:3px;transition:all .25s ease" style-hover="border-color:#08c0d8;color:#08c0d8">Call 947-228-0709</a>
+        </div>
+      </div>
+      <div style="background:rgba(11,18,22,.7);border:1px solid rgba(255,255,255,.11);border-radius:4px;backdrop-filter:blur(10px);padding:clamp(26px,3vw,38px);display:flex;flex-direction:column;gap:18px">
+        <div style="font-family:Sora,sans-serif;font-size:12px;letter-spacing:.2em;color:#7fdcea">REQUEST A CONSULTATION</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px">
+          <div style="display:flex;flex-direction:column;gap:8px"><label style="font-size:12.5px;color:#7d8d93;letter-spacing:.06em">NAME</label><div style="height:44px;border:1px solid rgba(255,255,255,.13);border-radius:3px;background:rgba(255,255,255,.03)"></div></div>
+          <div style="display:flex;flex-direction:column;gap:8px"><label style="font-size:12.5px;color:#7d8d93;letter-spacing:.06em">COMPANY</label><div style="height:44px;border:1px solid rgba(255,255,255,.13);border-radius:3px;background:rgba(255,255,255,.03)"></div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px"><label style="font-size:12.5px;color:#7d8d93;letter-spacing:.06em">WORK EMAIL</label><div style="height:44px;border:1px solid rgba(255,255,255,.13);border-radius:3px;background:rgba(255,255,255,.03)"></div></div>
+        <div style="display:flex;flex-direction:column;gap:8px"><label style="font-size:12.5px;color:#7d8d93;letter-spacing:.06em">WHAT DO YOU NEED HELP WITH?</label><div style="height:78px;border:1px solid rgba(255,255,255,.13);border-radius:3px;background:rgba(255,255,255,.03)"></div></div>
+        <div style="font-family:Sora,sans-serif;font-size:14.5px;font-weight:600;color:#06090b;background:#08c0d8;padding:15px;border-radius:3px;text-align:center">Send Request</div>
+        <div style="font-size:12.5px;color:#6d7d83">Form styling only — wiring comes in Phase 3.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#06090b;border-top:1px solid rgba(255,255,255,.08);padding:clamp(52px,6vw,84px) 0 34px">
+    <div style="max-width:1360px;margin:0 auto;padding:0 clamp(20px,4vw,56px)">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(28px,4vw,56px);padding-bottom:clamp(34px,4vw,54px);border-bottom:1px solid rgba(255,255,255,.08)">
+        <div>
+          <span style="display:inline-block;background:#fff;border-radius:3px;padding:16px 20px;margin-bottom:22px"><img src="assets/logo.webp" alt="Ideal Technology Solutions" style="height:54px;width:auto;display:block"></span>
+          <p style="font-size:14.5px;line-height:1.6;color:#7d8d93;margin:0;max-width:36ch;text-wrap:pretty">A Detroit-based technology partner delivering managed IT, cloud, security, software, data and consulting services to growing businesses.</p>
+        </div>
+        <div>
+          <div style="font-family:Sora,sans-serif;font-size:11.5px;letter-spacing:.2em;color:#08c0d8;margin-bottom:18px">SERVICE PILLARS</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="5">
+              <a href="#services" style="font-size:14.5px;color:#93a3a9" style-hover="color:#08c0d8">{{ p.title }}</a>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:Sora,sans-serif;font-size:11.5px;letter-spacing:.2em;color:#08c0d8;margin-bottom:18px">COMPANY</div>
+          <div style="display:flex;flex-direction:column;gap:11px">
+            <a href="#about" style="font-size:14.5px;color:#93a3a9" style-hover="color:#08c0d8">About</a>
+            <a href="#industries" style="font-size:14.5px;color:#93a3a9" style-hover="color:#08c0d8">Industries</a>
+            <a href="#catalog" style="font-size:14.5px;color:#93a3a9" style-hover="color:#08c0d8">Resources</a>
+            <a href="#contact" style="font-size:14.5px;color:#93a3a9" style-hover="color:#08c0d8">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:Sora,sans-serif;font-size:11.5px;letter-spacing:.2em;color:#08c0d8;margin-bottom:18px">CORPORATE HEADQUARTERS</div>
+          <div style="display:flex;flex-direction:column;gap:11px;font-size:14.5px;color:#93a3a9;line-height:1.5">
+            <span>29777 Telegraph Road, Suite 4200<br>Southfield, Michigan 48034</span>
+            <a href="tel:+19472280709" style="color:#e7eef0;font-family:Sora,sans-serif" style-hover="color:#08c0d8">947-228-0709</a>
+            <a href="mailto:info@idealtechnologysolutions.us" style="color:#93a3a9" style-hover="color:#08c0d8">info@idealtechnologysolutions.us</a>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top:26px;display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;font-size:13px;color:#5d6c72">
+        <span>Copyright © 2001–2026 Ideal Technology Solutions, LLC. All rights reserved.</span>
+        <span>Managed IT · Cloud · Cybersecurity · Software · Data · Consulting</span>
+      </div>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#08c0d8&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#08c0d8&quot;,&quot;#0891a8&quot;,&quot;#5fe2f2&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;animateOnScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+class Component extends DCLogic {
+  state = { active: 0, cat: 0, mega: false, mobile: false, w: 1440, years: 0, services: 0, partners: 0 };
+
+  pillarData() {
+    return [
+      { num: '01', title: 'Managed IT & Infrastructure', short: 'managed IT',
+        blurb: 'Keep systems reliable, supported and monitored. We run day-to-day IT so your team stops losing hours to technology and you stop being surprised by it.',
+        services: ['Managed IT Services','Network Design & Setup','IT Support & Maintenance','Infrastructure Monitoring','Microsoft 365 Services','Hardware & Software Sales','Technology Procurement','Device Installation','Software Licensing'],
+        menu: ['Managed IT Services','Network Design & Setup','IT Support & Maintenance','Infrastructure Monitoring','Microsoft 365 Services'] },
+      { num: '02', title: 'Cloud & Cybersecurity', short: 'cloud and security',
+        blurb: 'Move critical systems to a secure, scalable cloud without disrupting operations — then protect identity, endpoints and data with controls that hold up to audit.',
+        services: ['Microsoft Azure Services','Cloud Infrastructure','Cloud Migration','Secure Cloud Architecture','Backup & Disaster Recovery','Endpoint Security','Identity & Access Management','Compliance Support','DevOps Deployment'],
+        menu: ['Microsoft Azure Services','Cloud Migration','Backup & Disaster Recovery','Endpoint Security','Identity & Access Management'] },
+      { num: '03', title: 'Custom Software & Digital Products', short: 'software and web',
+        blurb: 'Websites, portals and applications built around how your business actually works — designed for the people who use them and maintained after launch.',
+        services: ['Website Design & Development','Custom Web Applications','Custom Software Development','Mobile App Development','Business Portals','API Development & Integration','Product Design','MVP Development','Application Support'],
+        menu: ['Website Design & Development','Custom Web Applications','Mobile App Development','Business Portals','API Integration'] },
+      { num: '04', title: 'Data, AI & Automation', short: 'data and automation',
+        blurb: 'Turn operational data into decisions, and repetitive work into automated workflows — starting with the reports and handoffs that cost you the most time.',
+        services: ['Power BI Solutions','Business Intelligence','Dashboards & Reporting','Data Integration','AI Application Development','AI Chatbots & Assistants','Workflow Automation','Process Automation','Analytics & Data Strategy'],
+        menu: ['Power BI Solutions','Dashboards & Reporting','Data Integration','Workflow Automation','AI Chatbots & Assistants'] },
+      { num: '05', title: 'Digital Transformation & Consulting', short: 'technology strategy',
+        blurb: 'Independent advice on what to modernize, in what order, and what it will take — grounded in an audit of the systems and processes you have today.',
+        services: ['Digital Transformation Strategy','Technology Consulting','IT & Process Audits','Technology Roadmaps','Process Improvement','System Modernization','IoT & Connected Solutions','Vendor Evaluation','Technology Planning'],
+        menu: ['Technology Consulting','IT & Process Audits','Technology Roadmaps','System Modernization','Vendor Evaluation'] }
+    ];
+  }
+
+  componentDidMount() {
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+
+    const root = this.rootEl || document.body;
+    const nodes = Array.from(root.querySelectorAll('[data-reveal]'));
+    if (this.props.animateOnScroll !== false && 'IntersectionObserver' in window) {
+      nodes.forEach((n, i) => {
+        n.style.opacity = '0';
+        n.style.transform = 'translateY(22px)';
+        n.style.transition = 'opacity .7s cubic-bezier(.22,1,.36,1) ' + ((i % 4) * 70) + 'ms, transform .7s cubic-bezier(.22,1,.36,1) ' + ((i % 4) * 70) + 'ms';
+      });
+      this.io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; this.io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      nodes.forEach(n => this.io.observe(n));
+    }
+
+    this.initParticles();
+    this.initCursor();
+    this.initParallax();
+
+    const t0 = performance.now();
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / 1600);
+      const e = 1 - Math.pow(1 - k, 3);
+      this.setState({ years: Math.round(25 * e), services: Math.round(45 * e), partners: Math.round(8 * e) });
+      if (k < 1) this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+
+  initParticles() {
+    const accent = this.props.accentColor || '#08c0d8';
+    const start = () => {
+      const el = document.getElementById('its-particles');
+      if (!el || typeof window.particlesJS !== 'function') return false;
+      if (el.dataset.ready === '1') return true;
+      el.dataset.ready = '1';
+      window.particlesJS('its-particles', {
+        particles: {
+          number: { value: 52, density: { enable: true, value_area: 900 } },
+          color: { value: accent },
+          shape: { type: 'circle' },
+          opacity: { value: 0.4, random: true, anim: { enable: true, speed: 0.6, opacity_min: 0.12 } },
+          size: { value: 2.4, random: true },
+          line_linked: { enable: true, distance: 145, color: accent, opacity: 0.18, width: 1 },
+          move: { enable: true, speed: 1.1, direction: 'none', out_mode: 'out' }
+        },
+        interactivity: {
+          detect_on: 'window',
+          events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true },
+          modes: { grab: { distance: 170, line_linked: { opacity: 0.35 } }, push: { particles_nb: 3 } }
+        },
+        retina_detect: true
+      });
+      return true;
+    };
+    if (!start()) {
+      let tries = 0;
+      this.pTimer = setInterval(() => { if (start() || ++tries > 40) clearInterval(this.pTimer); }, 150);
+    }
+  }
+
+  initCursor() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const accent = this.props.accentColor || '#08c0d8';
+    const ring = document.createElement('div');
+    ring.className = 'its-cursor';
+    ring.style.cssText = 'width:38px;height:38px;margin:-19px 0 0 -19px;border:1px solid ' + accent + ';border-radius:50%;transition:width .25s ease,height .25s ease,margin .25s ease,background .25s ease,border-color .25s ease,opacity .3s ease;opacity:0';
+    const dot = document.createElement('div');
+    dot.className = 'its-cursor';
+    dot.style.cssText = 'width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:' + accent + ';opacity:0;transition:opacity .3s ease';
+    document.body.appendChild(ring);
+    document.body.appendChild(dot);
+    this.cursorEls = [ring, dot];
+
+    let tx = window.innerWidth / 2, ty = window.innerHeight / 2, rx = tx, ry = ty;
+    const onMove = (e) => {
+      tx = e.clientX; ty = e.clientY;
+      dot.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)';
+      ring.style.opacity = '1'; dot.style.opacity = '1';
+      const hit = e.target.closest && e.target.closest('a,button,[data-cursor]');
+      if (hit) {
+        ring.style.width = '64px'; ring.style.height = '64px'; ring.style.margin = '-32px 0 0 -32px';
+        ring.style.background = 'rgba(8,192,216,.12)';
+      } else {
+        ring.style.width = '38px'; ring.style.height = '38px'; ring.style.margin = '-19px 0 0 -19px';
+        ring.style.background = 'transparent';
+      }
+    };
+    const loop = () => {
+      rx += (tx - rx) * 0.16; ry += (ty - ry) * 0.16;
+      ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)';
+      this.cursorRaf = requestAnimationFrame(loop);
+    };
+    window.addEventListener('mousemove', onMove, { passive: true });
+    this.onCursorMove = onMove;
+    this.cursorRaf = requestAnimationFrame(loop);
+  }
+
+  initParallax() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const floats = Array.from(document.querySelectorAll('[data-float]'));
+    if (!floats.length) return;
+    this.onParallax = (e) => {
+      const cx = (e.clientX / window.innerWidth - 0.5) * 2;
+      const cy = (e.clientY / window.innerHeight - 0.5) * 2;
+      floats.forEach(f => {
+        const d = parseFloat(f.dataset.floatDepth || '20');
+        f.style.marginLeft = (cx * d * 0.5).toFixed(1) + 'px';
+        f.style.marginTop = (cy * d * 0.5).toFixed(1) + 'px';
+      });
+    };
+    window.addEventListener('mousemove', this.onParallax, { passive: true });
+  }
+
+  componentWillUnmount() {
+    if (this.pTimer) clearInterval(this.pTimer);
+    if (this.cursorRaf) cancelAnimationFrame(this.cursorRaf);
+    if (this.onCursorMove) window.removeEventListener('mousemove', this.onCursorMove);
+    if (this.onParallax) window.removeEventListener('mousemove', this.onParallax);
+    if (this.cursorEls) this.cursorEls.forEach(e => e.remove());
+    window.removeEventListener('resize', this.onResize);
+    if (this.io) this.io.disconnect();
+    if (this.raf) cancelAnimationFrame(this.raf);
+  }
+
+  renderVals() {
+    const accent = this.props.accentColor || '#08c0d8';
+    const wide = this.state.w >= 1000;
+    const data = this.pillarData();
+    const active = data[this.state.active] || data[0];
+    const partners = ['Sophos','Veeam','Cisco','Fortinet','Ruckus Wireless','Hewlett Packard Enterprise','Lenovo','ViewSonic','Microsoft 365','Azure'];
+
+    return {
+      accent,
+      navDisplay: wide ? 'flex' : 'none',
+      phoneDisplay: this.state.w >= 760 ? 'inline-flex' : 'none',
+      burgerDisplay: wide ? 'none' : 'flex',
+      megaDisplay: this.state.mega ? 'grid' : 'none',
+      mobileDisplay: this.state.mobile && !wide ? 'flex' : 'none',
+      pillarGrid: this.state.w >= 1040 ? '0.85fr 1.15fr' : '1fr',
+      chainGrid: this.state.w >= 1180 ? 'repeat(6,1fr)' : this.state.w >= 720 ? 'repeat(3,1fr)' : 'repeat(2,1fr)',
+      nowrapWide: this.state.w >= 660 ? 'nowrap' : 'normal',
+      industriesGrid: this.state.w >= 980 ? 'repeat(3,1fr)' : this.state.w >= 640 ? 'repeat(2,1fr)' : '1fr',
+      whyGrid: this.state.w >= 1000 ? '0.95fr 1.05fr' : '1fr',
+      whySubGrid: this.state.w >= 640 ? 'repeat(2,1fr)' : '1fr',
+      aboutGrid: this.state.w >= 1000 ? '1.05fr 0.95fr' : '1fr',
+      factGrid: this.state.w >= 1000 ? 'repeat(4,1fr)' : this.state.w >= 620 ? 'repeat(2,1fr)' : '1fr',
+      catalogGrid: this.state.w >= 1080 ? 'repeat(3,1fr)' : this.state.w >= 680 ? 'repeat(2,1fr)' : '1fr',
+      catalogFilters: ['Managed IT','Cloud & security','Software & web','Data & automation','Strategy'].map((n, i) => ({
+        name: n,
+        count: String(data[i].services.length),
+        select: () => this.setState({ cat: i }),
+        bg: i === this.state.cat ? accent : 'transparent',
+        color: i === this.state.cat ? '#06090b' : '#93a3a9',
+        border: i === this.state.cat ? accent : 'rgba(255,255,255,.14)'
+      })),
+      catalogActiveTitle: data[this.state.cat].title,
+      catalogItems: data[this.state.cat].services.map(s => ({ name: s, tag: '', tagDisplay: 'none' })),
+      openMega: () => this.setState({ mega: true }),
+      closeMega: () => this.setState({ mega: false }),
+      toggleMega: (e) => { e.preventDefault(); this.setState(s => ({ mega: !s.mega })); },
+      toggleMobile: () => this.setState(s => ({ mobile: !s.mobile })),
+      closeMobile: () => this.setState({ mobile: false }),
+
+      countYears: this.state.years + '+',
+      countServices: this.state.services + '+',
+      countPartners: String(this.state.partners),
+
+      healthRows: [
+        { label: 'Network uptime', value: 'Stable', bar: '94%' },
+        { label: 'Endpoint protection', value: 'Enforced', bar: '88%' },
+        { label: 'Cloud backup', value: 'Verified', bar: '97%' },
+        { label: 'Patch compliance', value: 'Current', bar: '91%' }
+      ],
+
+      partnerLoop: partners.concat(partners),
+      partnerGrid: this.state.w >= 1100 ? 'repeat(4,1fr)' : this.state.w >= 700 ? 'repeat(3,1fr)' : 'repeat(2,1fr)',
+      partnerCards: [
+        { name: 'Cisco', file: 'cisco', ratio: 1.77, h: 78 },
+        { name: 'Fortinet', file: 'fortinet', ratio: 8.51, h: 32 },
+        { name: 'Sophos', file: 'sophos', ratio: 6.25, h: 38 },
+        { name: 'Veeam', file: 'veeam', ratio: 5.49, h: 40 },
+        { name: 'Hewlett Packard Enterprise', file: 'hpe', ratio: 2.29, h: 68 },
+        { name: 'Lenovo', file: 'lenovo', ratio: 4.83, h: 42 },
+        { name: 'Ruckus Wireless', file: 'ruckus', ratio: 1.61, h: 80 },
+        { name: 'ViewSonic', file: 'viewsonic', ratio: 4.93, h: 42 }
+      ].map(p => {
+        const h = Math.min(p.h, 210 / p.ratio);
+        return {
+        name: p.name,
+        h: Math.round(h) + 'px',
+        w: Math.round(h * p.ratio) + 'px',
+        bg: 'url(assets/partners/' + p.file + '-trim.png)'
+        };
+      }),
+
+      pillars: data.map((p, i) => ({
+        num: p.num, title: p.title, menu: p.menu,
+        select: () => this.setState({ active: i }),
+        bg: i === this.state.active ? 'rgba(8,192,216,.09)' : 'transparent',
+        edge: i === this.state.active ? accent : 'transparent',
+        numColor: i === this.state.active ? accent : '#5d6c72',
+        titleColor: i === this.state.active ? '#ffffff' : '#93a3a9'
+      })),
+      active,
+
+      reasons: [
+        { num: '01', title: 'Fast, accountable response', body: 'Support requests reach an engineer who knows your environment, not a queue that starts from zero every time.' },
+        { num: '02', title: 'Certified expertise across the stack', body: 'Microsoft, network, security and cloud certifications behind every recommendation — and the willingness to say when something is not worth buying.' },
+        { num: '03', title: 'Solutions built around your business', body: 'We start from how your team works and what you are accountable for, then choose technology that fits. No packaged tiers you have to grow into.' },
+        { num: '04', title: 'Enterprise-grade platforms', body: 'The same vendors and architectures used by larger organizations, sized and priced for small and mid-market businesses.' },
+        { num: '05', title: 'A partnership measured in years', body: 'Roadmaps, budgets and reviews on a schedule, so technology decisions stay ahead of the business instead of reacting to it.' }
+      ],
+
+      reasonLead: {
+        num: '01', title: 'Fast, accountable response',
+        body: 'Support requests reach an engineer who already knows your environment, not a queue that starts from zero every time. You get a name, a timeline and a resolution.',
+        stat: 'Same-day', statLabel: 'RESPONSE ON CRITICAL ISSUES'
+      },
+      reasonRest: [
+        { num: '02', title: 'Certified expertise', body: 'Microsoft, network, security and cloud certifications behind every recommendation — including the willingness to say when something is not worth buying.' },
+        { num: '03', title: 'Built around your business', body: 'We start from how your team works and what you are accountable for, then choose technology that fits. No packaged tiers to grow into.' },
+        { num: '04', title: 'Enterprise-grade platforms', body: 'The vendors and architectures larger organizations run, sized and priced for small and mid-market businesses.' },
+        { num: '05', title: 'A partnership in years', body: 'Roadmaps, budgets and reviews on a schedule, so technology stays ahead of the business instead of reacting to it.' }
+      ],
+
+      chain: [
+        { num: '01', title: 'People', body: 'Identity, devices and access for every employee.', delay: '0s' },
+        { num: '02', title: 'Network', body: 'Wired, wireless and connectivity designed for load.', delay: '.4s' },
+        { num: '03', title: 'Cloud', body: 'Azure and hybrid infrastructure that scales.', delay: '.8s' },
+        { num: '04', title: 'Security', body: 'Endpoint, email and identity protection enforced.', delay: '1.2s' },
+        { num: '05', title: 'Data', body: 'Integrated, reported and ready for decisions.', delay: '1.6s' },
+        { num: '06', title: 'Business', body: 'Uptime, productivity and room to grow.', delay: '2s' }
+      ],
+
+      industries: [
+        { num: '01', glyph: 'HL', meta: 'HIPAA-aware environments', title: 'Healthcare', body: 'Secure systems for clinics and practices, built to keep patient data protected and operations moving.' },
+        { num: '02', glyph: 'AU', meta: 'Plant and dealership IT', title: 'Automotive', body: 'Connectivity and infrastructure for suppliers, plants and dealerships across the region.' },
+        { num: '03', glyph: 'MF', meta: 'Shop floor to reporting', title: 'Manufacturing', body: 'Resilient networks and software that keep production, supply chain and reporting aligned.' },
+        { num: '04', glyph: 'RT', meta: 'POS and multi-site', title: 'Retail & Service', body: 'POS, cloud and support for storefronts and service businesses that cannot afford downtime.' },
+        { num: '05', glyph: 'ED', meta: 'Campus-scale networks', title: 'Education', body: 'Scalable, secure technology for schools and colleges serving students and staff at once.' },
+        { num: '06', glyph: 'NP', meta: 'Budget-conscious builds', title: 'Non-Profits', body: 'Practical technology that stretches limited budgets without limiting what the mission requires.' }
+      ],
+
+      facts: [
+        { label: 'FOUNDED', value: 'Operating since 2001' },
+        { label: 'HEADQUARTERS', value: 'Southfield, Michigan' },
+        { label: 'SERVES', value: 'Detroit metro and surrounding region' },
+        { label: 'PLATFORMS', value: 'Microsoft, Cisco, Fortinet, Sophos, Veeam, HPE' }
+      ],
+
+      catalog: [
+        'Managed IT Services','Network Design & Setup','IT Support & Maintenance','Infrastructure Monitoring',
+        'Microsoft 365 Services','Hardware & Software Sales','Technology Procurement','Software Licensing',
+        'Microsoft Azure Services','Cloud Infrastructure','Cloud Migration','Secure Cloud Architecture',
+        'Backup & Disaster Recovery','Endpoint Security','Identity & Access Management','Compliance Technology',
+        'Website Design & Development','Custom Web Applications','Mobile App Development','WordPress Development',
+        'Shopify Development','Business Portals','API Development & Integration','Product Design',
+        'Power BI Solutions','Business Intelligence','Dashboards & Reporting','Data Integration',
+        'AI Application Development','AI Chatbots & Assistants','Workflow Automation','Process Automation',
+        'Digital Transformation Strategy','Technology Consulting','IT & Process Audits','Technology Roadmaps',
+        'Process Improvement','System Modernization','IoT & Connected Solutions','Vendor Evaluation'
+      ],
+
+      steps: [
+        { num: '01', title: 'Assess', body: 'Audit the environment, the risks and the way work moves today.' },
+        { num: '02', title: 'Plan', body: 'Agree on priorities, budget and the order of operations.' },
+        { num: '03', title: 'Implement', body: 'Deploy with minimal disruption to daily business.' },
+        { num: '04', title: 'Manage', body: 'Monitor, patch, support and report on what we run.' },
+        { num: '05', title: 'Grow', body: 'Revisit the roadmap as headcount, sites and demand change.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
