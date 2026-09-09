@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="description" content="Ideal Technology Solutions — managed IT, cloud infrastructure, network design and technology consulting for small and mid-sized businesses in Detroit." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #071022; color: #0A1730; font-family: Manrope, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  a { color: #22B8DC; text-decoration: none; }
+  a:hover { color: #6FD8EE; }
+  img { max-width: 100%; }
+  ::selection { background: #22B8DC; color: #071022; }
+  @keyframes its-spin { to { transform: rotate(360deg); } }
+  @keyframes its-marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes its-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  @keyframes its-float-slow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(18px); } }
+  @keyframes its-blob { 0%,100% { transform: translate(0,0) scale(1); } 33% { transform: translate(6%,-4%) scale(1.12); } 66% { transform: translate(-5%,5%) scale(0.94); } }
+  @keyframes its-grid { from { background-position: 0 0; } to { background-position: 0 -60px; } }
+  @keyframes its-scan { 0% { transform: translateY(-10%); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(320%); opacity: 0; } }
+  @keyframes its-pulse { 0%,100% { opacity: .35; transform: scale(1); } 50% { opacity: .9; transform: scale(1.6); } }
+  @keyframes its-bar { 0%,100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+  }
+</style>
+</helmet>
+
+<div style="background:#071022;font-family:Manrope,system-ui,sans-serif;">
+
+  <a href="#main" style="position:absolute;left:-9999px;top:0;background:#22B8DC;color:#071022;padding:10px 16px;z-index:200;font-weight:700;" style-focus="left:12px;top:12px;">Skip to main content</a>
+
+  <div style="background:#0A1730;color:#C7D6EA;font-size:13px;padding:9px 0;border-bottom:1px solid rgba(34,184,220,.16);">
+    <div style="max-width:1240px;margin:0 auto;padding:0 22px;display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;">
+      <p style="margin:0;line-height:1.55;flex:1 1 300px;min-width:0;">
+        <span style="width:7px;height:7px;border-radius:50%;background:#22B8DC;box-shadow:0 0 0 4px rgba(34,184,220,.18);display:inline-block;margin-right:12px;vertical-align:middle;"></span>
+        Schedule a <strong style="color:#fff;font-weight:700;">30 minute</strong> appointment with a client advisor today.
+      </p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 22px;align-items:center;">
+        <a href="tel:+19472280709" style="color:#C7D6EA;font-weight:600;white-space:nowrap;" style-hover="color:#22B8DC;">947-228-0709</a>
+        <a href="mailto:info@idealtechnologysolutions.us" style="color:#C7D6EA;font-weight:600;" style-hover="color:#22B8DC;">info@idealtechnologysolutions.us</a>
+      </div>
+    </div>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:120;background:rgba(7,16,34,.86);backdrop-filter:blur(14px);border-bottom:1px solid rgba(199,214,234,.12);">
+    <nav aria-label="Primary" style="max-width:1240px;margin:0 auto;padding:14px 22px;display:flex;align-items:center;gap:20px;justify-content:space-between;">
+      <a href="#main" aria-label="Ideal Technology Solutions home" style="display:block;flex:none;">
+        <img src="https://idealtechnologysolutions.us/wp-content/uploads/2025/08/Logo-IdealTS-NO-BG-1-e1756749623695-1024x286.png" alt="Ideal Technology Solutions" style="height:44px;width:auto;display:block;filter:brightness(0) invert(1);" />
+      </a>
+
+      <ul style="{{ deskNav }}">
+        <li><a href="#main" style="display:block;padding:10px 14px;color:#fff;font-weight:600;font-size:15px;border-radius:8px;" style-hover="background:rgba(34,184,220,.14);">Home</a></li>
+        <li><a href="#about" style="display:block;padding:10px 14px;color:#C7D6EA;font-weight:600;font-size:15px;border-radius:8px;" style-hover="background:rgba(34,184,220,.14);color:#fff;">About</a></li>
+        <li onMouseEnter="{{ openServices }}" onMouseLeave="{{ closeServices }}" style="position:relative;">
+          <a href="#services" aria-haspopup="true" style="display:flex;align-items:center;gap:7px;padding:10px 14px;color:#C7D6EA;font-weight:600;font-size:15px;border-radius:8px;" style-hover="background:rgba(34,184,220,.14);color:#fff;">
+            Services
+            <span aria-hidden="true" style="width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translateY(-2px);display:inline-block;"></span>
+          </a>
+          <div style="{{ dropStyle }}">
+            <ul style="list-style:none;margin:0;padding:10px;background:#0F2242;border:1px solid rgba(34,184,220,.24);border-radius:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);">
+              <li><a href="#services" style="display:block;padding:11px 13px;border-radius:9px;color:#DCE7F5;font-size:14.5px;font-weight:600;" style-hover="background:rgba(34,184,220,.14);color:#fff;">IT Managed Services</a></li>
+              <li><a href="#services" style="display:block;padding:11px 13px;border-radius:9px;color:#DCE7F5;font-size:14.5px;font-weight:600;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Cloud Infrastructure</a></li>
+              <li><a href="#services" style="display:block;padding:11px 13px;border-radius:9px;color:#DCE7F5;font-size:14.5px;font-weight:600;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Web Design &amp; Development</a></li>
+              <li><a href="#services" style="display:block;padding:11px 13px;border-radius:9px;color:#DCE7F5;font-size:14.5px;font-weight:600;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Hardware &amp; Software Sales</a></li>
+              <li><a href="#services" style="display:block;padding:11px 13px;border-radius:9px;color:#DCE7F5;font-size:14.5px;font-weight:600;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Network Design</a></li>
+              <li><a href="#services" style="display:block;padding:11px 13px;border-radius:9px;color:#DCE7F5;font-size:14.5px;font-weight:600;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Technology Consulting</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="#industries" style="display:block;padding:10px 14px;color:#C7D6EA;font-weight:600;font-size:15px;border-radius:8px;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Industries</a></li>
+        <li><a href="#insights" style="display:block;padding:10px 14px;color:#C7D6EA;font-weight:600;font-size:15px;border-radius:8px;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Blog</a></li>
+        <li><a href="#contact" style="display:block;padding:10px 14px;color:#C7D6EA;font-weight:600;font-size:15px;border-radius:8px;" style-hover="background:rgba(34,184,220,.14);color:#fff;">Contact</a></li>
+      </ul>
+
+      <a href="#contact" style="{{ deskCta }}" style-hover="transform:translateY(-2px);box-shadow:0 18px 34px -12px rgba(34,184,220,.95);color:#03101F;">Schedule a Consultation</a>
+
+      <button type="button" aria-label="Open menu" aria-expanded="{{ menuOpen }}" onClick="{{ toggleMenu }}" style="{{ burger }}">
+        <span aria-hidden="true" style="display:block;width:20px;height:2px;background:#fff;"></span>
+        <span aria-hidden="true" style="display:block;width:20px;height:2px;background:#fff;"></span>
+        <span aria-hidden="true" style="display:block;width:14px;height:2px;background:#22B8DC;"></span>
+      </button>
+    </nav>
+
+    <div style="{{ mobileMenu }}">
+      <ul style="list-style:none;margin:0 0 16px;padding:0;display:grid;gap:2px;">
+        <li><a href="#main" onClick="{{ closeMenu }}" style="display:block;padding:14px 12px;color:#fff;font-weight:700;font-size:17px;border-bottom:1px solid rgba(199,214,234,.1);">Home</a></li>
+        <li><a href="#about" onClick="{{ closeMenu }}" style="display:block;padding:14px 12px;color:#DCE7F5;font-weight:700;font-size:17px;border-bottom:1px solid rgba(199,214,234,.1);">About</a></li>
+        <li><a href="#services" onClick="{{ closeMenu }}" style="display:block;padding:14px 12px;color:#DCE7F5;font-weight:700;font-size:17px;border-bottom:1px solid rgba(199,214,234,.1);">Services</a></li>
+        <li><a href="#industries" onClick="{{ closeMenu }}" style="display:block;padding:14px 12px;color:#DCE7F5;font-weight:700;font-size:17px;border-bottom:1px solid rgba(199,214,234,.1);">Industries</a></li>
+        <li><a href="#insights" onClick="{{ closeMenu }}" style="display:block;padding:14px 12px;color:#DCE7F5;font-weight:700;font-size:17px;border-bottom:1px solid rgba(199,214,234,.1);">Blog</a></li>
+        <li><a href="#contact" onClick="{{ closeMenu }}" style="display:block;padding:14px 12px;color:#DCE7F5;font-weight:700;font-size:17px;">Contact</a></li>
+      </ul>
+      <a href="#contact" onClick="{{ closeMenu }}" style="display:block;text-align:center;padding:16px;border-radius:12px;background:linear-gradient(135deg,#22B8DC,#2E6FD1);color:#03101F;font-weight:700;font-size:16px;">Schedule a Consultation</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section aria-label="Introduction" style="position:relative;overflow:hidden;background:#071022;padding:clamp(56px,7vw,104px) 0 clamp(64px,7vw,110px);">
+      <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(rgba(34,184,220,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(34,184,220,.07) 1px,transparent 1px);background-size:60px 60px;animation:its-grid 22s linear infinite;mask-image:radial-gradient(120% 90% at 50% 0%,#000 20%,transparent 78%);-webkit-mask-image:radial-gradient(120% 90% at 50% 0%,#000 20%,transparent 78%);"></div>
+      <div aria-hidden="true" style="position:absolute;top:-18%;right:-6%;width:44vw;height:44vw;max-width:640px;max-height:640px;border-radius:50%;background:radial-gradient(circle,rgba(34,184,220,.34),transparent 62%);filter:blur(20px);animation:its-blob 18s ease-in-out infinite;"></div>
+      <div aria-hidden="true" style="position:absolute;bottom:-24%;left:-10%;width:40vw;height:40vw;max-width:560px;max-height:560px;border-radius:50%;background:radial-gradient(circle,rgba(46,111,209,.32),transparent 64%);filter:blur(24px);animation:its-blob 24s ease-in-out infinite reverse;"></div>
+
+      <div style="position:relative;max-width:1240px;margin:0 auto;padding:0 22px;display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,64px);align-items:stretch;">
+        <div style="flex:1 1 440px;min-width:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;">
+          <p data-reveal style="display:inline-flex;align-items:center;gap:10px;margin:0 0 22px;padding:8px 15px 8px 11px;border:1px solid rgba(34,184,220,.36);border-radius:999px;background:rgba(34,184,220,.09);color:#8FE2F5;font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;">
+            <span aria-hidden="true" style="position:relative;width:8px;height:8px;display:inline-block;"><span style="position:absolute;inset:0;border-radius:50%;background:#22B8DC;"></span><span style="position:absolute;inset:0;border-radius:50%;background:#22B8DC;animation:its-pulse 2.4s ease-in-out infinite;"></span></span>
+            Detroit &amp; Metro Detroit
+          </p>
+          <h1 data-reveal style="width:100%;font-family:'Space Grotesk',Manrope,sans-serif;margin:0 0 22px;color:#fff;font-size:clamp(38px,5.4vw,70px);line-height:1.03;letter-spacing:-.03em;font-weight:700;text-wrap:balance;">
+            Technology that keeps your business
+            <span style="background:linear-gradient(100deg,#22B8DC 10%,#6FD8EE 45%,#2E6FD1 95%);-webkit-background-clip:text;background-clip:text;color:transparent;"> moving forward</span>
+          </h1>
+          <p data-reveal style="margin:0 0 34px;width:100%;max-width:56ch;color:#B8CBE2;font-size:clamp(16.5px,1.45vw,19.5px);line-height:1.65;">
+            Ideal Technology Solutions delivers managed IT, cloud infrastructure, network design and technology consulting for small and mid-sized businesses. We keep your systems secure, your teams productive and your technology ready for what comes next.
+          </p>
+          <div data-reveal style="display:flex;flex-wrap:wrap;gap:14px;margin:0 0 40px;width:100%;">
+            <a href="#contact" style="display:inline-flex;align-items:center;gap:11px;padding:17px 28px;border-radius:12px;background:linear-gradient(135deg,#22B8DC,#2E6FD1);color:#03101F;font-weight:700;font-size:16px;box-shadow:0 18px 40px -16px rgba(34,184,220,.85);transition:transform .28s ease,box-shadow .28s ease;" style-hover="transform:translateY(-3px);box-shadow:0 26px 50px -16px rgba(34,184,220,1);color:#03101F;">
+              Strengthen Your IT Today
+              <span aria-hidden="true" style="display:inline-block;">&#8594;</span>
+            </a>
+            <a href="#services" style="display:inline-flex;align-items:center;gap:11px;padding:17px 26px;border-radius:12px;border:1px solid rgba(199,214,234,.32);color:#fff;font-weight:700;font-size:16px;transition:background .28s ease,border-color .28s ease,transform .28s ease;" style-hover="background:rgba(34,184,220,.12);border-color:#22B8DC;transform:translateY(-3px);color:#fff;">Explore Our Services</a>
+          </div>
+          <dl data-reveal style="margin:0;width:100%;display:flex;flex-wrap:wrap;gap:14px 34px;border-top:1px solid rgba(199,214,234,.14);padding-top:26px;">
+            <div>
+              <dt style="color:#8FA8C6;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">In business since</dt>
+              <dd style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;">2001</dd>
+            </div>
+            <div>
+              <dt style="color:#8FA8C6;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">Service lines</dt>
+              <dd style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;">Six</dd>
+            </div>
+            <div>
+              <dt style="color:#8FA8C6;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;">Certified partners</dt>
+              <dd style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;">Eight</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div data-reveal style="flex:1 1 400px;min-width:0;position:relative;display:flex;">
+          <div style="position:relative;flex:1;min-width:0;display:flex;flex-direction:column;border-radius:24px;overflow:hidden;border:1px solid rgba(34,184,220,.3);background:linear-gradient(160deg,#0F2242,#071022 70%);box-shadow:0 50px 90px -40px rgba(0,0,0,.9);">
+            <div style="display:flex;align-items:center;gap:8px;padding:14px 18px;border-bottom:1px solid rgba(34,184,220,.18);background:rgba(10,23,48,.7);">
+              <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:#22B8DC;display:block;"></span>
+              <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:#2E6FD1;display:block;"></span>
+              <span aria-hidden="true" style="width:9px;height:9px;border-radius:50%;background:#F5A623;display:block;"></span>
+              <span style="margin-left:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:#8FA8C6;letter-spacing:.06em;">network-operations // live</span>
+            </div>
+            <div style="position:relative;flex:1;min-height:clamp(280px,32vw,460px);overflow:hidden;display:flex;align-items:flex-end;padding:20px;">
+              <img src="uploads/imgi_11_future-artificial-intelligence-robot-cyborg_31965-5456.webp" alt="Engineer at a laptop with a live network dashboard overlay" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;" />
+              <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,16,34,.2),rgba(7,16,34,.82));"></div>
+              <div aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:34%;background:linear-gradient(180deg,rgba(34,184,220,.24),transparent);animation:its-scan 6.5s ease-in-out infinite;"></div>
+              
+              <p style="position:relative;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.6;color:#8FE2F5;letter-spacing:.04em;">
+                Live monitoring across every client site
+              </p>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:clamp(-28px,-2vw,0px);bottom:clamp(-26px,-2vw,0px);width:min(74%,272px);padding:16px 18px;border-radius:16px;background:rgba(10,23,48,.94);border:1px solid rgba(34,184,220,.34);box-shadow:0 26px 50px -22px rgba(0,0,0,.85);animation:its-float 7s ease-in-out infinite;">
+            <p style="margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8FA8C6;">Endpoint security</p>
+            <p style="margin:0 0 12px;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;">All systems protected</p>
+            <div style="height:6px;border-radius:99px;background:rgba(199,214,234,.16);overflow:hidden;"><span style="display:block;height:100%;width:94%;border-radius:99px;background:linear-gradient(90deg,#22B8DC,#6FD8EE);"></span></div>
+          </div>
+
+          <div style="position:absolute;right:clamp(-20px,-1.5vw,0px);top:clamp(-24px,-2vw,0px);padding:14px 18px;border-radius:16px;background:rgba(10,23,48,.94);border:1px solid rgba(245,166,35,.4);box-shadow:0 26px 50px -22px rgba(0,0,0,.85);animation:its-float-slow 8.5s ease-in-out infinite;">
+            <p style="margin:0 0 4px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F5C877;">Response</p>
+            <p style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;">Same-day</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="Technology partners" style="background:#F5F8FB;padding:clamp(30px,3.4vw,44px) 0;border-top:1px solid rgba(10,23,48,.06);">
+      <p style="margin:0 0 22px;text-align:center;color:#5C7593;font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Certified with the brands your business already runs on</p>
+      <div onMouseEnter="{{ pauseMarquee }}" onMouseLeave="{{ playMarquee }}" style="position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);">
+        <div style="{{ marqueeStyle }}">
+          <sc-for list="{{ partnersLoop }}" as="p" hint-placeholder-count="8">
+            <img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy" style="height:clamp(30px,3.4vw,44px);width:auto;object-fit:contain;filter:grayscale(1);opacity:.62;transition:filter .35s ease,opacity .35s ease,transform .35s ease;" style-hover="filter:grayscale(0);opacity:1;transform:scale(1.06);" />
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" aria-labelledby="svc-h" style="background:#F5F8FB;padding:clamp(64px,7vw,116px) 0;">
+      <div style="max-width:1240px;margin:0 auto;padding:0 22px;">
+        <div data-reveal style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(34px,4vw,54px);">
+          <div style="flex:1 1 480px;min-width:0;">
+            <p style="margin:0 0 14px;color:#2E6FD1;font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">What we do</p>
+            <h2 id="svc-h" style="font-family:'Space Grotesk',sans-serif;margin:0;color:#0A1730;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.025em;font-weight:700;max-width:22ch;text-wrap:balance;">Six service lines, one accountable team</h2>
+          </div>
+          <p style="flex:1 1 300px;min-width:0;margin:0;color:#4A6180;font-size:16.5px;line-height:1.65;max-width:44ch;">Every engagement starts with your business goals, not a product catalogue. We scope, build and support the technology around how your people actually work.</p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(240px,30%),1fr));gap:clamp(16px,1.6vw,22px);align-items:stretch;">
+
+          <article style="grid-column:span 2;grid-row:span 2;position:relative;overflow:hidden;border-radius:22px;padding:2px;background:#0A1730;box-shadow:0 30px 60px -34px rgba(10,23,48,.55);" style-before="content:'';position:absolute;left:50%;top:50%;width:220%;aspect-ratio:1;transform:translate(-50%,-50%);background:conic-gradient(from 0deg,transparent 0deg,#22B8DC 40deg,#2E6FD1 80deg,transparent 130deg,transparent 360deg);animation:its-spin 7s linear infinite;">
+            <div style="position:relative;height:100%;border-radius:20px;background:linear-gradient(150deg,#0F2242,#0A1730 65%);padding:clamp(28px,3vw,42px);display:flex;flex-direction:column;gap:22px;overflow:hidden;">
+              <div aria-hidden="true" style="position:absolute;right:-14%;top:-30%;width:56%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(34,184,220,.3),transparent 62%);"></div>
+              <p style="position:relative;margin:0;display:inline-flex;align-self:flex-start;padding:7px 13px;border-radius:999px;background:rgba(34,184,220,.16);color:#8FE2F5;font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;">Most requested</p>
+              <div style="position:relative;">
+                <h3 style="font-family:'Space Grotesk',sans-serif;margin:0 0 14px;color:#fff;font-size:clamp(25px,2.6vw,34px);line-height:1.12;letter-spacing:-.02em;font-weight:700;">IT Managed Services</h3>
+                <p style="margin:0 0 22px;color:#B8CBE2;font-size:16.5px;line-height:1.65;max-width:52ch;">Reliable IT management for small and mid-sized businesses: proactive monitoring, patching, helpdesk and vendor coordination that keep daily operations smooth and secure. One predictable relationship instead of six phone numbers.</p>
+                <ul style="list-style:none;margin:0 0 26px;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:10px 22px;">
+                  <li style="display:flex;gap:10px;color:#DCE7F5;font-size:15px;font-weight:600;"><span aria-hidden="true" style="color:#22B8DC;">&#10003;</span> Proactive monitoring</li>
+                  <li style="display:flex;gap:10px;color:#DCE7F5;font-size:15px;font-weight:600;"><span aria-hidden="true" style="color:#22B8DC;">&#10003;</span> Patch &amp; update management</li>
+                  <li style="display:flex;gap:10px;color:#DCE7F5;font-size:15px;font-weight:600;"><span aria-hidden="true" style="color:#22B8DC;">&#10003;</span> Helpdesk your team can reach</li>
+                  <li style="display:flex;gap:10px;color:#DCE7F5;font-size:15px;font-weight:600;"><span aria-hidden="true" style="color:#22B8DC;">&#10003;</span> Security &amp; backup oversight</li>
+                </ul>
+                <a href="#contact" style="display:inline-flex;align-items:center;gap:10px;color:#22B8DC;font-weight:700;font-size:15.5px;" style-hover="gap:16px;color:#6FD8EE;">Read more <span aria-hidden="true">&#8594;</span></a>
+              </div>
+              <div style="position:relative;margin-top:auto;padding-top:clamp(22px,2.4vw,30px);border-top:1px solid rgba(199,214,234,.14);display:grid;grid-template-columns:repeat(auto-fit,minmax(max(130px,30%),1fr));gap:20px 24px;">
+                <div>
+                  <p style="margin:0 0 7px;color:#8FA8C6;font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;">In business since</p>
+                  <p style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;">2001</p>
+                </div>
+                <div>
+                  <p style="margin:0 0 7px;color:#8FA8C6;font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;">Service lines</p>
+                  <p style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;">Six</p>
+                </div>
+                <div>
+                  <p style="margin:0 0 7px;color:#8FA8C6;font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;">Certified partners</p>
+                  <p style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700;">Eight</p>
+                </div>
+              </div>
+              <p style="position:relative;margin:0;display:flex;gap:12px;align-items:flex-start;color:#8FA8C6;font-size:14.5px;line-height:1.6;">
+                <span aria-hidden="true" style="flex:none;color:#22B8DC;">&#9737;</span>
+                Managed on site across Detroit and Metro Detroit, remote when that is faster.
+              </p>
+            </div>
+          </article>
+
+          <sc-for list="{{ services }}" as="s" hint-placeholder-count="5">
+            <article style="position:relative;background:#fff;border:1px solid rgba(10,23,48,.09);border-radius:20px;padding:clamp(24px,2.4vw,32px);display:flex;flex-direction:column;gap:16px;transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s ease,border-color .35s ease;overflow:hidden;" style-hover="transform:translateY(-8px);box-shadow:0 34px 60px -30px rgba(10,23,48,.42);border-color:rgba(34,184,220,.6);">
+              <p style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;color:#A9BBD1;">{{ s.no }}</p>
+              <div aria-hidden="true" style="width:52px;height:52px;border-radius:14px;background:linear-gradient(150deg,rgba(34,184,220,.16),rgba(46,111,209,.12));display:flex;align-items:center;justify-content:center;">
+                <span style="width:22px;height:22px;border:2.5px solid #2E6FD1;border-radius:{{ s.iconRadius }};display:block;"></span>
+              </div>
+              <h3 style="font-family:'Space Grotesk',sans-serif;margin:0;color:#0A1730;font-size:21px;line-height:1.2;letter-spacing:-.015em;font-weight:700;">{{ s.title }}</h3>
+              <p style="margin:0;color:#4A6180;font-size:15.5px;line-height:1.62;flex:1;">{{ s.body }}</p>
+              <a href="#contact" style="display:inline-flex;align-items:center;gap:9px;color:#2E6FD1;font-weight:700;font-size:15px;" style-hover="gap:15px;color:#22B8DC;">Read more <span aria-hidden="true">&#8594;</span></a>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section aria-label="By the numbers" style="position:relative;overflow:hidden;background:#0A1730;padding:clamp(52px,5.5vw,80px) 0;">
+      <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(90deg,rgba(34,184,220,.08) 1px,transparent 1px);background-size:80px 100%;"></div>
+      <div aria-hidden="true" style="position:absolute;left:50%;top:-60%;width:70vw;height:120%;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(46,111,209,.28),transparent 65%);"></div>
+      <div style="position:relative;max-width:1240px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:clamp(28px,3vw,40px);">
+        <sc-for list="{{ stats }}" as="st" hint-placeholder-count="4">
+          <div data-reveal style="border-left:2px solid rgba(34,184,220,.4);padding-left:22px;">
+            <p style="margin:0 0 8px;font-family:'Space Grotesk',sans-serif;color:#fff;font-size:clamp(38px,4.4vw,58px);line-height:1;letter-spacing:-.03em;font-weight:700;"><span data-count="{{ st.value }}" data-suffix="{{ st.suffix }}">{{ st.display }}</span></p>
+            <p style="margin:0;color:#8FE2F5;font-size:14px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">{{ st.label }}</p>
+            <p style="margin:8px 0 0;color:#8FA8C6;font-size:15px;line-height:1.55;">{{ st.note }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-h" style="background:#fff;padding:clamp(64px,7vw,116px) 0;">
+      <div style="max-width:1240px;margin:0 auto;padding:0 22px;display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,72px);align-items:stretch;">
+        <div data-reveal style="flex:1 1 380px;min-width:0;position:relative;display:flex;">
+          <div style="position:relative;flex:1;min-width:0;min-height:clamp(300px,34vw,520px);border-radius:22px;overflow:hidden;border:1px solid rgba(10,23,48,.1);">
+            <img src="uploads/imgi_77_businessman-holding-virtual-screen-world-with-virtual-global-internet-connection-digital-marketing-global-internet-connection-applicati.webp" alt="A client advisor reviewing a global network dashboard on a laptop" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          </div>
+          <div style="position:absolute;right:clamp(-18px,-1.4vw,0px);bottom:clamp(-22px,-1.8vw,0px);padding:20px 24px;border-radius:18px;background:#0A1730;box-shadow:0 30px 60px -28px rgba(10,23,48,.65);animation:its-float 9s ease-in-out infinite;">
+            <p style="margin:0 0 6px;color:#8FE2F5;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Headquarters</p>
+            <p style="margin:0;color:#fff;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;line-height:1.3;">Southfield, Michigan</p>
+          </div>
+        </div>
+        <div data-reveal style="flex:1 1 420px;min-width:0;">
+          <p style="margin:0 0 14px;color:#2E6FD1;font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Who we are</p>
+          <h2 id="about-h" style="font-family:'Space Grotesk',sans-serif;margin:0 0 22px;color:#0A1730;font-size:clamp(29px,3.6vw,46px);line-height:1.1;letter-spacing:-.025em;font-weight:700;text-wrap:balance;">Empowering Detroit businesses with trusted IT solutions</h2>
+          <p style="margin:0 0 18px;color:#4A6180;font-size:16.5px;line-height:1.7;">Ideal Technology Solutions is a trusted technology partner serving businesses in Detroit and surrounding areas. We provide IT Managed Services, Network Design, Cloud Infrastructure, Web Design and Development, and Hardware and Software solutions that keep organizations connected, secure and operating smoothly.</p>
+          <p style="margin:0 0 32px;color:#4A6180;font-size:16.5px;line-height:1.7;">Our team is committed to delivering scalable and reliable technology tailored to your business goals. Whether you need ongoing IT support, strong and secure infrastructure, or modern cloud and web solutions, we make sure your technology works as a driver of productivity and long term success.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:18px;margin-bottom:34px;">
+            <div style="padding:18px 20px;border-radius:14px;background:#F5F8FB;border:1px solid rgba(10,23,48,.07);transition:border-color .3s ease,transform .3s ease;" style-hover="border-color:rgba(34,184,220,.6);transform:translateY(-4px);">
+              <p style="margin:0 0 6px;font-family:'Space Grotesk',sans-serif;color:#0A1730;font-size:17px;font-weight:700;">Locally accountable</p>
+              <p style="margin:0;color:#4A6180;font-size:14.5px;line-height:1.55;">On-site when it matters, remote when it is faster.</p>
+            </div>
+            <div style="padding:18px 20px;border-radius:14px;background:#F5F8FB;border:1px solid rgba(10,23,48,.07);transition:border-color .3s ease,transform .3s ease;" style-hover="border-color:rgba(34,184,220,.6);transform:translateY(-4px);">
+              <p style="margin:0 0 6px;font-family:'Space Grotesk',sans-serif;color:#0A1730;font-size:17px;font-weight:700;">Vendor-backed</p>
+              <p style="margin:0;color:#4A6180;font-size:14.5px;line-height:1.55;">Certified across eight leading technology brands.</p>
+            </div>
+          </div>
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:11px;padding:16px 26px;border-radius:12px;background:#0A1730;color:#fff;font-weight:700;font-size:16px;transition:background .3s ease,transform .3s ease;" style-hover="background:#0F2242;transform:translateY(-3px);color:#fff;">Discover Our Story <span aria-hidden="true">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="why-h" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#F5F8FB,#E9F1F8);padding:clamp(64px,7vw,116px) 0;">
+      <div style="max-width:1240px;margin:0 auto;padding:0 22px;">
+        <div data-reveal style="max-width:60ch;margin:0 auto clamp(44px,5vw,68px);text-align:center;">
+          <p style="margin:0 0 14px;color:#2E6FD1;font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Why clients choose us</p>
+          <h2 id="why-h" style="font-family:'Space Grotesk',sans-serif;margin:0 0 18px;color:#0A1730;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.025em;font-weight:700;text-wrap:balance;">Four reasons businesses stay with Ideal</h2>
+          <p style="margin:0;color:#4A6180;font-size:16.5px;line-height:1.65;">The work is technical. The relationship is not. Here is what clients tell us keeps them with us year after year.</p>
+        </div>
+        <div style="position:relative;">
+          <div aria-hidden="true" style="position:absolute;left:6%;right:6%;top:44px;height:2px;background:linear-gradient(90deg,transparent,rgba(34,184,220,.55) 12%,rgba(46,111,209,.55) 88%,transparent);"></div>
+          <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:clamp(18px,2vw,26px);">
+            <sc-for list="{{ reasons }}" as="r" hint-placeholder-count="4">
+              <div style="background:#fff;border:1px solid rgba(10,23,48,.08);border-radius:20px;padding:clamp(24px,2.4vw,30px);transition:transform .35s cubic-bezier(.2,.7,.3,1),box-shadow .35s ease;" style-hover="transform:translateY(-10px);box-shadow:0 36px 66px -32px rgba(10,23,48,.4);">
+                <div aria-hidden="true" style="width:56px;height:56px;border-radius:16px;background:#0A1730;color:#22B8DC;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:20px;box-shadow:0 0 0 8px rgba(233,241,248,.9);">{{ r.no }}</div>
+                <h3 style="font-family:'Space Grotesk',sans-serif;margin:0 0 12px;color:#0A1730;font-size:20px;line-height:1.2;letter-spacing:-.015em;font-weight:700;">{{ r.title }}</h3>
+                <p style="margin:0;color:#4A6180;font-size:15.5px;line-height:1.62;">{{ r.body }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div data-reveal style="text-align:center;margin-top:clamp(36px,4vw,52px);">
+          <a href="#contact" style="display:inline-flex;align-items:center;gap:11px;padding:17px 30px;border-radius:12px;background:linear-gradient(135deg,#22B8DC,#2E6FD1);color:#03101F;font-weight:700;font-size:16px;box-shadow:0 18px 40px -18px rgba(34,184,220,.8);transition:transform .3s ease;" style-hover="transform:translateY(-3px);color:#03101F;">Partner with Us <span aria-hidden="true">&#8594;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="industries" aria-labelledby="ind-h" style="background:#071022;padding:clamp(64px,7vw,116px) 0;position:relative;overflow:hidden;">
+      <div aria-hidden="true" style="position:absolute;right:-8%;bottom:-16%;width:46vw;height:46vw;max-width:600px;max-height:600px;border-radius:50%;background:radial-gradient(circle,rgba(34,184,220,.22),transparent 64%);filter:blur(22px);animation:its-blob 21s ease-in-out infinite;"></div>
+      <div style="position:relative;max-width:1240px;margin:0 auto;padding:0 22px;">
+        <div data-reveal style="display:flex;flex-wrap:wrap;gap:26px;align-items:flex-end;justify-content:space-between;margin-bottom:clamp(34px,4vw,54px);">
+          <div style="flex:1 1 460px;min-width:0;">
+            <p style="margin:0 0 14px;color:#8FE2F5;font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;">Industries we serve</p>
+            <h2 id="ind-h" style="font-family:'Space Grotesk',sans-serif;margin:0;color:#fff;font-size:clamp(30px,3.8vw,50px);line-height:1.08;letter-spacing:-.025em;font-weight:700;max-width:24ch;text-wrap:balance;">Built for the way your industry actually operates</h2>
+          </div>
+          <p style="flex:1 1 300px;min-width:0;margin:0;color:#B8CBE2;font-size:16.5px;line-height:1.65;max-width:42ch;">Compliance, uptime and budget pressures differ by sector, so the technology behind them should too.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(260px,30%),1fr));gap:clamp(14px,1.5vw,20px);">
+          <sc-for list="{{ industries }}" as="i" hint-placeholder-count="6">
+            <article style="position:relative;overflow:hidden;border-radius:20px;border:1px solid rgba(199,214,234,.16);background:linear-gradient(160deg,#0F2242,#0A1730);padding:clamp(24px,2.4vw,30px);transition:transform .4s cubic-bezier(.2,.7,.3,1),border-color .4s ease,box-shadow .4s ease;" style-hover="transform:translateY(-8px);border-color:rgba(34,184,220,.7);box-shadow:0 40px 70px -34px rgba(0,0,0,.9);">
+              <img src="{{ i.img }}" alt="" aria-hidden="true" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;" />
+              <div aria-hidden="true" style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(10,23,48,.62),rgba(10,23,48,.86));"></div>
+              <div aria-hidden="true" style="position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(34,184,220,.1) 0 8px,rgba(34,184,220,0) 8px 16px);opacity:.25;"></div>
+              <div style="position:relative;">
+                <p style="margin:0 0 14px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;letter-spacing:.14em;color:#6C8AAC;">{{ i.tag }}</p>
+                <h3 style="font-family:'Space Grotesk',sans-serif;margin:0;color:#fff;font-size:clamp(21px,2.1vw,26px);line-height:1.15;letter-spacing:-.02em;font-weight:700;">{{ i.title }}</h3>
+                <p style="margin:14px 0 0;color:#B8CBE2;font-size:15.5px;line-height:1.62;">{{ i.body }}</p>
+                <a href="#contact" style="margin:18px 0 0;display:inline-flex;align-items:center;gap:10px;color:#22B8DC;font-weight:700;font-size:14.5px;transition:gap .35s ease;" style-hover="gap:16px;color:#6FD8EE;">Explore sector <span aria-hidden="true">&#8594;</span></a>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="insights" aria-labelledby="cta-h" style="background:#F5F8FB;padding:clamp(64px,7vw,116px) 0;">
+      <div style="max-width:1240px;margin:0 auto;padding:0 22px;">
+        <div data-reveal style="position:relative;overflow:hidden;border-radius:26px;padding:2px;background:#0A1730;" style-before="content:'';position:absolute;left:50%;top:50%;width:160%;aspect-ratio:1;transform:translate(-50%,-50%);background:conic-gradient(from 90deg,transparent 0deg,#2E6FD1 30deg,#22B8DC 70deg,transparent 120deg,transparent 360deg);animation:its-spin 9s linear infinite;">
+          <div style="position:relative;border-radius:24px;background:linear-gradient(140deg,#0F2242 0%,#0A1730 55%,#071022 100%);padding:clamp(38px,5vw,72px);overflow:hidden;">
+            <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(rgba(34,184,220,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(34,184,220,.06) 1px,transparent 1px);background-size:48px 48px;"></div>
+            <div aria-hidden="true" style="position:absolute;right:-10%;top:-40%;width:44%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,rgba(34,184,220,.34),transparent 62%);animation:its-blob 16s ease-in-out infinite;"></div>
+            <div style="position:relative;display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center;justify-content:space-between;">
+              <div style="flex:1 1 440px;min-width:0;">
+                <h2 id="cta-h" style="font-family:'Space Grotesk',sans-serif;margin:0 0 18px;color:#fff;font-size:clamp(29px,3.6vw,46px);line-height:1.08;letter-spacing:-.025em;font-weight:700;max-width:24ch;text-wrap:balance;">Partner with Detroit&rsquo;s trusted IT team</h2>
+                <p style="margin:0 0 30px;color:#B8CBE2;font-size:17px;line-height:1.65;max-width:52ch;">Book a 30 minute call with a client advisor. We will review your current setup, flag the risks worth fixing first, and tell you plainly what it takes.</p>
+                <div style="display:flex;flex-wrap:wrap;gap:14px;">
+                  <a href="#contact" style="display:inline-flex;align-items:center;gap:11px;padding:17px 28px;border-radius:12px;background:linear-gradient(135deg,#22B8DC,#2E6FD1);color:#03101F;font-weight:700;font-size:16px;transition:transform .3s ease;" style-hover="transform:translateY(-3px);color:#03101F;">Schedule a Consultation <span aria-hidden="true">&#8594;</span></a>
+                  <a href="tel:+19472280709" style="display:inline-flex;align-items:center;gap:11px;padding:17px 26px;border-radius:12px;border:1px solid rgba(199,214,234,.34);color:#fff;font-weight:700;font-size:16px;transition:background .3s ease,border-color .3s ease;" style-hover="background:rgba(34,184,220,.12);border-color:#22B8DC;color:#fff;">Talk to Us: 947-228-0709</a>
+                </div>
+              </div>
+              <ul style="flex:0 1 280px;min-width:0;list-style:none;margin:0;padding:0;display:grid;gap:14px;">
+                <li style="display:flex;gap:12px;align-items:flex-start;color:#DCE7F5;font-size:15.5px;line-height:1.5;"><span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:7px;background:rgba(34,184,220,.18);color:#22B8DC;display:flex;align-items:center;justify-content:center;font-size:12px;">&#10003;</span> No obligation and no sales script</li>
+                <li style="display:flex;gap:12px;align-items:flex-start;color:#DCE7F5;font-size:15.5px;line-height:1.5;"><span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:7px;background:rgba(34,184,220,.18);color:#22B8DC;display:flex;align-items:center;justify-content:center;font-size:12px;">&#10003;</span> A written summary of what we find</li>
+                <li style="display:flex;gap:12px;align-items:flex-start;color:#DCE7F5;font-size:15.5px;line-height:1.5;"><span aria-hidden="true" style="flex:none;width:22px;height:22px;border-radius:7px;background:rgba(34,184,220,.18);color:#22B8DC;display:flex;align-items:center;justify-content:center;font-size:12px;">&#10003;</span> Clear pricing before any work starts</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contact" style="position:relative;overflow:hidden;background:#050D1C;padding:clamp(52px,5.5vw,84px) 0 0;">
+    <div aria-hidden="true" style="position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#22B8DC 22%,#2E6FD1 62%,transparent);"></div>
+    <div aria-hidden="true" style="position:absolute;inset:0;background-image:linear-gradient(rgba(34,184,220,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(34,184,220,.05) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(120% 80% at 50% 0%,#000 10%,transparent 70%);-webkit-mask-image:radial-gradient(120% 80% at 50% 0%,#000 10%,transparent 70%);"></div>
+    <div aria-hidden="true" style="position:absolute;left:-8%;bottom:-40%;width:44vw;height:44vw;max-width:600px;max-height:600px;border-radius:50%;background:radial-gradient(circle,rgba(46,111,209,.26),transparent 64%);filter:blur(20px);"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;padding:0 22px;">
+
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(32px,4vw,64px);padding-bottom:clamp(34px,3.6vw,50px);">
+        <div style="flex:1 1 400px;min-width:0;">
+          <img src="https://idealtechnologysolutions.us/wp-content/uploads/2025/08/Logo-IdealTS-NO-BG-1-e1756749623695-1024x286.png" alt="Ideal Technology Solutions" style="height:52px;width:auto;display:block;margin-bottom:22px;filter:brightness(0) invert(1);" />
+          <p style="margin:0 0 26px;color:#9FB4CE;font-size:15.5px;line-height:1.75;max-width:56ch;">Ideal Technology Solutions is a Detroit based IT consulting and services company helping businesses thrive with secure, scalable and reliable technology. We specialize in IT Managed Services, Cloud Infrastructure, Web Design and Development, Network Design, Business Phone Systems, Hardware and Software Sales, and Technology Consulting tailored to your needs.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;">
+            <a href="#insights" style="display:inline-flex;align-items:center;gap:11px;padding:15px 26px;border-radius:12px;background:linear-gradient(135deg,#22B8DC,#2E6FD1);color:#03101F;font-weight:700;font-size:15.5px;box-shadow:0 18px 40px -18px rgba(34,184,220,.85);transition:transform .28s ease;" style-hover="transform:translateY(-3px);color:#03101F;">Schedule a Consultation <span aria-hidden="true">&#8594;</span></a>
+            <a href="tel:+19472280709" style="display:inline-flex;align-items:center;gap:11px;padding:15px 24px;border-radius:12px;border:1px solid rgba(199,214,234,.3);color:#fff;font-weight:700;font-size:15.5px;transition:background .28s ease,border-color .28s ease;" style-hover="background:rgba(34,184,220,.12);border-color:#22B8DC;color:#fff;">Talk to Us: 947-228-0709</a>
+          </div>
+        </div>
+        <div style="flex:1 1 470px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(max(215px,45%),1fr));gap:clamp(24px,2.6vw,40px);">
+          <div style="min-width:0;">
+            <h2 style="font-family:'Space Grotesk',sans-serif;margin:0 0 18px;color:#fff;font-size:14.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Website Links</h2>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;gap:13px;">
+            <li><a href="#main" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Home</a></li>
+            <li><a href="#about" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> About</a></li>
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Services</a></li>
+            <li><a href="#industries" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Industries</a></li>
+            <li><a href="#insights" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Blog</a></li>
+            <li><a href="#contact" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Contact Us</a></li>
+            </ul>
+          </div>
+          <div style="min-width:0;">
+            <h2 style="font-family:'Space Grotesk',sans-serif;margin:0 0 18px;color:#fff;font-size:14.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Services</h2>
+            <ul style="list-style:none;margin:0;padding:0;display:grid;gap:13px;">
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> IT Managed Services</a></li>
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Cloud Infrastructure</a></li>
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Web Design &amp; Development</a></li>
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Hardware &amp; Software Sales</a></li>
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Network Design</a></li>
+            <li><a href="#services" style="display:inline-flex;align-items:flex-start;gap:9px;color:#8FA8C6;font-size:15.5px;line-height:1.45;padding:3px 0;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;"><span aria-hidden="true" style="color:#22B8DC;font-size:12px;line-height:1.85;">&#8250;</span> Technology Consulting</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(max(240px,30%),1fr));gap:clamp(14px,1.5vw,20px);padding-bottom:clamp(30px,3.2vw,44px);">
+          <div style="position:relative;border:1px solid rgba(199,214,234,.12);border-radius:16px;background:rgba(15,34,66,.5);padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:border-color .35s ease,transform .35s ease,background .35s ease;" style-hover="border-color:rgba(34,184,220,.55);transform:translateY(-4px);background:rgba(15,34,66,.78);">
+            <span aria-hidden="true" style="flex:none;width:40px;height:40px;border-radius:12px;background:rgba(34,184,220,.14);color:#22B8DC;display:flex;align-items:center;justify-content:center;font-size:16px;">&#9742;</span>
+            <div style="min-width:0;">
+              <p style="margin:0 0 6px;color:#8FA8C6;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Call us</p>
+              <a href="tel:+19472280709" style="color:#fff;font-weight:700;font-size:17px;" style-hover="color:#22B8DC;">947-228-0709</a>
+            </div>
+          </div>
+          <div style="position:relative;border:1px solid rgba(199,214,234,.12);border-radius:16px;background:rgba(15,34,66,.5);padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:border-color .35s ease,transform .35s ease,background .35s ease;" style-hover="border-color:rgba(34,184,220,.55);transform:translateY(-4px);background:rgba(15,34,66,.78);">
+            <span aria-hidden="true" style="flex:none;width:40px;height:40px;border-radius:12px;background:rgba(34,184,220,.14);color:#22B8DC;display:flex;align-items:center;justify-content:center;font-size:16px;">&#9993;</span>
+            <div style="min-width:0;">
+              <p style="margin:0 0 6px;color:#8FA8C6;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Email us</p>
+              <a href="mailto:info@idealtechnologysolutions.us" style="color:#fff;font-weight:700;font-size:15.5px;word-break:break-word;" style-hover="color:#22B8DC;">info@idealtechnologysolutions.us</a>
+            </div>
+          </div>
+          <div style="position:relative;border:1px solid rgba(199,214,234,.12);border-radius:16px;background:rgba(15,34,66,.5);padding:20px 22px;display:flex;gap:14px;align-items:flex-start;transition:border-color .35s ease,transform .35s ease,background .35s ease;" style-hover="border-color:rgba(34,184,220,.55);transform:translateY(-4px);background:rgba(15,34,66,.78);">
+            <span aria-hidden="true" style="flex:none;width:40px;height:40px;border-radius:12px;background:rgba(34,184,220,.14);color:#22B8DC;display:flex;align-items:center;justify-content:center;font-size:16px;">&#9737;</span>
+            <div style="min-width:0;">
+              <p style="margin:0 0 6px;color:#8FA8C6;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;">Visit us</p>
+              <p style="margin:0;color:#DCE7F5;font-size:15px;line-height:1.55;font-weight:600;">29777 Telegraph Road, Suite 4200<br />Southfield, Michigan, 48034</p>
+            </div>
+          </div>
+      </div>
+
+      <div style="display:flex;flex-wrap:wrap;gap:16px 26px;align-items:center;justify-content:space-between;border-top:1px solid rgba(199,214,234,.12);padding:24px 0 30px;">
+        <p style="margin:0;color:#6C8AAC;font-size:14px;">Copyright &copy; 2001-2026 Ideal Technology Solutions, LLC. All rights reserved</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;">
+          <span style="display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:999px;border:1px solid rgba(34,184,220,.3);background:rgba(34,184,220,.08);color:#8FE2F5;font-size:12.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;">
+            <span aria-hidden="true" style="width:7px;height:7px;border-radius:50%;background:#22B8DC;display:inline-block;"></span> Detroit &amp; Metro Detroit
+          </span>
+          <a href="#main" style="display:inline-flex;align-items:center;gap:9px;color:#8FA8C6;font-size:14px;font-weight:700;transition:color .3s ease,gap .3s ease;" style-hover="color:#22B8DC;gap:14px;">Back to top <span aria-hidden="true">&#8593;</span></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+const PARTNERS = [
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/sophos-Photoroom.png", alt: "Sophos" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/Veeam-Photoroom.png", alt: "Veeam" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/11/cisco.png", alt: "Cisco" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/Fortinet-Photoroom.png", alt: "Fortinet" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/ruckus-Photoroom.png", alt: "Ruckus Wireless" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/hpe-Photoroom.png", alt: "Hewlett Packard Enterprise" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/lenovo.png", alt: "Lenovo" },
+  { src: "https://idealtechnologysolutions.us/wp-content/uploads/2025/12/ViewSonic-Photoroom.png", alt: "ViewSonic" }
+];
+
+const SERVICES = [
+  { no: "02", iconRadius: "50%", title: "Cloud Infrastructure", body: "Secure, scalable cloud environments that give your team flexibility and reliability without surprise bills or downtime." },
+  { no: "03", iconRadius: "4px", title: "Web Design & Development", body: "Responsive, business-focused websites built to load fast, rank well and turn visitors into enquiries." },
+  { no: "04", iconRadius: "50% 4px 50% 4px", title: "Hardware & Software Sales", body: "Authorized sales and licensing across trusted brands, specified for your workload and budget rather than upsold." },
+  { no: "05", iconRadius: "4px 50% 4px 50%", title: "Network Design", body: "Wired and wireless networks engineered for secure, high-speed connectivity across every site and floor." },
+  { no: "06", iconRadius: "50% 50% 4px 50%", title: "Technology Consulting", body: "Practical IT guidance and roadmaps that align technology spend with where the business is actually going." }
+];
+
+const STATS = [
+  { value: 25, suffix: "+", display: "25+", label: "Years in business", note: "Serving Michigan organizations since 2001." },
+  { value: 8, suffix: "", display: "8", label: "Certified partners", note: "Sophos, Veeam, Cisco, Fortinet and more." },
+  { value: 6, suffix: "", display: "6", label: "Industries served", note: "From clinics and classrooms to plant floors." },
+  { value: 30, suffix: " min", display: "30 min", label: "To your first review", note: "A call with a client advisor, not a queue." }
+];
+
+const REASONS = [
+  { no: "01", title: "Fast Response Times", body: "Quick IT support to keep your business running smoothly, with clear escalation so nobody waits without an answer." },
+  { no: "02", title: "Certified Experts", body: "Skilled professionals holding top industry certifications across security, networking and cloud platforms." },
+  { no: "03", title: "Customized IT Solutions", body: "Tailored services designed around your unique business needs, not a package you have to grow into." },
+  { no: "04", title: "Trusted Technology Partners", body: "Working with leading brands so the hardware, software and support behind you are all dependable." }
+];
+
+const IND_IMGS = ["uploads/imgi_62_web-30-internet-concept-web-30-symbolize-technology-future_184421-1979.webp","uploads/6864937_23324.webp","uploads/16406299_rm373batch2-08.webp","uploads/imgi_385_digital-marketing-success-with-growth-chart-illustration_1356430-1936.webp","uploads/imgi_66_cuttingedge-virtual-reality-headset-against-backdrop-interconnected-glowing-blue-network-lines-symbolizing-advanced-technology-connecti.webp","uploads/14542.webp"];
+
+const INDUSTRIES = [
+  { tag: "01 / HEALTHCARE", title: "Healthcare", body: "Secure IT systems designed for hospitals, clinics and medical practices to keep patient data safe and operations smooth." },
+  { tag: "02 / AUTOMOTIVE", title: "Automotive", body: "IT solutions that enhance connectivity, streamline manufacturing and support dealerships with reliable infrastructure." },
+  { tag: "03 / MANUFACTURING", title: "Manufacturing", body: "Robust networks and software solutions built to optimize production, supply chains and operational efficiency." },
+  { tag: "04 / RETAIL", title: "Retail & Service", body: "POS systems, cloud services and IT support tailored for retail stores and service-based businesses." },
+  { tag: "05 / EDUCATION", title: "Education", body: "Advanced IT solutions to empower schools, colleges and universities with secure, scalable technology systems." },
+  { tag: "06 / NON-PROFITS", title: "Non-Profits", body: "Affordable, effective IT services designed to help mission-driven organizations achieve more with limited budgets." }
+];
+
+class Component extends DCLogic {
+  state = { narrow: false, menuOpen: false, servicesOpen: false, marqueePaused: false };
+
+  componentDidMount() {
+    this.measure = () => {
+      const n = window.innerWidth < 1040;
+      if (n !== this.state.narrow) this.setState({ narrow: n, menuOpen: false });
+    };
+    this.measure();
+    window.addEventListener("resize", this.measure);
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const nodes = Array.from(document.querySelectorAll("[data-reveal]"));
+    if (!reduce) {
+      nodes.forEach((el) => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(26px)";
+        el.style.transition = "opacity .8s cubic-bezier(.2,.7,.3,1), transform .8s cubic-bezier(.2,.7,.3,1)";
+      });
+    }
+
+    const runCount = (el) => {
+      const target = parseFloat(el.dataset.count);
+      const suffix = el.dataset.suffix || "";
+      if (reduce) { el.textContent = target + suffix; return; }
+      const dur = 1500, t0 = Date.now();
+      const id = setInterval(() => {
+        const p = Math.min((Date.now() - t0) / dur, 1);
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+        if (p >= 1) clearInterval(id);
+      }, 40);
+    };
+
+    let pending = nodes.slice();
+    let counters = Array.from(document.querySelectorAll("[data-count]"));
+    const sweep = () => {
+      const vh = window.innerHeight || 800;
+      if (pending.length) {
+        const hit = [];
+        pending = pending.filter((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.top < vh * 0.92 && r.bottom > -60) { hit.push(el); return false; }
+          return true;
+        });
+        hit.forEach((el, i) => {
+          el.style.transitionDelay = Math.min(i * 90, 270) + "ms";
+          el.style.opacity = "1";
+          el.style.transform = "none";
+        });
+      }
+      if (counters.length) {
+        counters = counters.filter((el) => {
+          const r = el.getBoundingClientRect();
+          if (r.top < vh * 0.9 && r.bottom > 0) { runCount(el); return false; }
+          return true;
+        });
+      }
+      if (!pending.length && !counters.length) {
+        clearInterval(this.timer);
+        window.removeEventListener("scroll", sweep);
+      }
+    };
+    this.sweep = sweep;
+    window.addEventListener("scroll", sweep, { passive: true });
+    this.timer = setInterval(sweep, 140);
+    sweep();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.measure);
+    if (this.sweep) window.removeEventListener("scroll", this.sweep);
+    if (this.timer) clearInterval(this.timer);
+  }
+
+  renderVals() {
+    const { narrow, menuOpen, servicesOpen, marqueePaused } = this.state;
+    return {
+      partnersLoop: PARTNERS.concat(PARTNERS),
+      services: SERVICES,
+      stats: STATS,
+      reasons: REASONS,
+      industries: INDUSTRIES.map((it, i) => Object.assign({}, it, { img: IND_IMGS[i % IND_IMGS.length] })),
+      deskNav: { listStyle: "none", display: narrow ? "none" : "flex", alignItems: "center", gap: "6px", margin: 0, padding: 0 },
+      deskCta: { flex: "none", padding: "13px 22px", borderRadius: "10px", background: "linear-gradient(135deg,#22B8DC,#2E6FD1)", color: "#03101F", fontWeight: 700, fontSize: "14.5px", boxShadow: "0 12px 26px -12px rgba(34,184,220,.8)", transition: "transform .25s ease, box-shadow .25s ease", display: narrow ? "none" : "inline-flex" },
+      burger: { flex: "none", width: "46px", height: "46px", borderRadius: "11px", border: "1px solid rgba(199,214,234,.28)", background: "rgba(34,184,220,.1)", color: "#fff", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "5px", cursor: "pointer", display: narrow ? "flex" : "none" },
+      mobileMenu: { borderTop: "1px solid rgba(199,214,234,.12)", padding: "16px 22px 26px", background: "#0A1730", display: narrow && menuOpen ? "block" : "none" },
+      dropStyle: { position: "absolute", top: "100%", left: 0, paddingTop: "10px", width: "288px", display: servicesOpen ? "block" : "none" },
+      marqueeStyle: { display: "flex", width: "max-content", gap: "clamp(38px,5vw,76px)", alignItems: "center", animation: "its-marquee 34s linear infinite", animationPlayState: marqueePaused ? "paused" : "running" },
+      menuOpen: menuOpen ? "true" : "false",
+      toggleMenu: () => this.setState({ menuOpen: !menuOpen }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      openServices: () => this.setState({ servicesOpen: true }),
+      closeServices: () => this.setState({ servicesOpen: false }),
+      pauseMarquee: () => this.setState({ marqueePaused: true }),
+      playMarquee: () => this.setState({ marqueePaused: false })
+    };
+  }
+}
+
+</script>
+</body>
+</html>
